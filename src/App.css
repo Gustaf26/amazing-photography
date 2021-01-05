@@ -24,7 +24,7 @@
   color: white;
 }
 
-#list-nav {
+.list-nav {
   display: flex;
   list-style-type: none;
   color: white;

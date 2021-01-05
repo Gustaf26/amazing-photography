@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { Button, Spinner } from "react-bootstrap";
 
+import { useMainContext } from "./MainContext";
+
 const AuthContext = createContext();
 
 const useAuth = () => {
@@ -9,35 +11,23 @@ const useAuth = () => {
 };
 
 const AuthContextProvider = (props) => {
-  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [admin, setAdmin] = useState(false);
+  const { setUser } = useMainContext();
 
   const login = (email, password) => {
     return auth.signInWithEmailAndPassword(email, password);
   };
 
   const logout = () => {
-    setAdmin(false);
+    setUser(false);
     return auth.signOut();
-  };
-
-  const checkIfAdmin = (email) => {
-    if (email.trim() === "gcs26@yahoo.com") {
-      setAdmin(true);
-      return true;
-    } else {
-      setAdmin(false);
-      return false;
-    }
   };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       // auth state changed (by a user either logging in or out)
-      setCurrentUser(user);
       if (user) {
-        checkIfAdmin(user.email);
+        setUser(user);
       }
       setLoading(false);
     });
@@ -46,9 +36,7 @@ const AuthContextProvider = (props) => {
   }, []);
 
   const contextValues = {
-    currentUser,
     loading,
-    admin,
     login,
     logout,
   };
