@@ -19,7 +19,7 @@ const AuthContextProvider = (props) => {
   };
 
   const logout = () => {
-    setUser(false);
+    setUser("");
     return auth.signOut();
   };
 
