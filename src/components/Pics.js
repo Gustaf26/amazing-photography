@@ -14,7 +14,7 @@ const Pics = () => {
   const history = useHistory();
 
   const selectPic = (pic, ind) => {
-    document.getElementById(ind).style.outline = "2px solid green";
+    // document.getElementById(ind).style.outline = "2px solid green";
 
     allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
@@ -34,7 +34,7 @@ const Pics = () => {
   };
 
   const deleteSelection = (pic, ind) => {
-    document.getElementById(ind).style.outline = "2px solid red";
+    // document.getElementById(ind).style.outline = "2px solid red";
     allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
         return (picture.selected = false);
@@ -82,8 +82,14 @@ const Pics = () => {
             allPicsFix.current &&
             allPicsFix.current.map((pic, index) => {
               return (
-                <Card className="ml-3" id={index} key={index}>
-                  <Media id="media" key={pic.id}>
+                <Card
+                  className={
+                    pic.selected ? "pic-selected ml-3" : "not-selected ml-3"
+                  }
+                  id="media"
+                  key={index}
+                >
+                  <Media key={pic.id}>
                     <img
                       width="100%"
                       height="auto"

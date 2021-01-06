@@ -38,28 +38,37 @@ const Create = () => {
     <>
       {loaded && allPicsInDb && !falseyPics && (
         <Container>
-          <Col lg={4} className="my-5 pt-5 mx-auto">
+          <Col lg={10} className="my-5 pt-5 mx-auto">
             <Form className="mx-auto form px-5 py-5" onSubmit={createAlbum}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Yur new album</Form.Label>
-                {allPicsInDb &&
-                  allPicsInDb.map((pic, index) => {
-                    if (pic.selected === true) {
-                      return (
-                        <Card className="ml-3" id={index} key={index}>
-                          <Media id="media" key={pic.id}>
-                            <img
-                              width="100%"
-                              height="auto"
-                              src={pic.url}
-                              alt="Generic placeholder"
-                            />
-                          </Media>
-                        </Card>
-                      );
-                    }
-                  })}
-                <Button variant="primary" type="submit">
+              <Form.Group>
+                <Form.Label>
+                  <h2>CREATE YOUR ALBUM</h2>
+                </Form.Label>
+                <Form.Control
+                  className="my-3"
+                  type="text"
+                  placeholder="Set an album name"
+                />
+                <Col lg={12} md={10} className="d-flex">
+                  {allPicsInDb &&
+                    allPicsInDb.map((pic, index) => {
+                      if (pic.selected === true) {
+                        return (
+                          <Card className="ml-3" id="media" key={index}>
+                            <Media key={pic.id}>
+                              <img
+                                width="100%"
+                                height="auto"
+                                src={pic.url}
+                                alt="Generic placeholder"
+                              />
+                            </Media>
+                          </Card>
+                        );
+                      }
+                    })}
+                </Col>
+                <Button className="my-3" variant="primary" type="submit">
                   Confirm
                 </Button>
               </Form.Group>

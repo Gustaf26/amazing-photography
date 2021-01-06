@@ -50,6 +50,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 33%;
 }
 
 #pic-message {
@@ -63,4 +64,8 @@
 
 .icon {
   font-size: x-large;
+}
+
+.pic-selected {
+  outline: 2px solid green;
 }
