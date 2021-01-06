@@ -50,7 +50,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 33%;
+  max-width: 30%;
 }
 
 #pic-message {
@@ -68,4 +68,8 @@
 
 .pic-selected {
   outline: 2px solid green;
+}
+
+.not-selected {
+  outline: 2px solid red;
 }
