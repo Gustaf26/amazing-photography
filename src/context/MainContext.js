@@ -11,10 +11,16 @@ const useMainContext = () => {
 const MainContextProvider = (props) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState("");
+  const [fotograferSelected, setSelected] = useState([]);
+  const [fotograferDeclined, setDeclined] = useState([]);
 
   const contextValues = {
     setUser,
     user,
+    setSelected,
+    setDeclined,
+    fotograferDeclined,
+    fotograferSelected,
   };
 
   useEffect(() => {

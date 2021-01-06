@@ -17,8 +17,8 @@ function App() {
         <header className="App-header">
           <nav>
             <Row sm={12} md={10} lg={12}>
-              <ul className="mt-3 list-nav">
-                <li className="pr-5 ml-0">
+              <ul className="mt-3 main-nav d-flex">
+                <li id="home-icon" className="pr-5 ml-0 my-2">
                   <Link to="/">Amazing Photography</Link>
                 </li>
                 {user ? (
@@ -29,12 +29,12 @@ function App() {
                     <li className="px-3">
                       <Link to="/pics">Pics</Link>
                     </li>
-                    <li className="px-3">
+                    <li className="px-3 mt-3">
                       <p onClick={logout}>Logout</p>
                     </li>
                   </ul>
                 ) : (
-                  <li className="px-3">
+                  <li className="px-3 my-2">
                     <Link to="/login">Login</Link>
                   </li>
                 )}
