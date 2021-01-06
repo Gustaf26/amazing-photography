@@ -14,6 +14,7 @@ import "../App.css";
 
 const Create = () => {
   const [loaded, setLoaded] = useState(false);
+  const [falseyPics, setFalsey] = useState(false);
   //   const { login } = useAuth();
   const { user, allPicsInDb } = useMainContext();
 
@@ -25,12 +26,17 @@ const Create = () => {
   useEffect(() => {
     if (allPicsInDb && allPicsInDb.length) {
       setLoaded(true);
+      const truthy = allPicsInDb.filter((pic) => pic.selected === true);
+      console.log(truthy);
+      if (!truthy.length) {
+        setFalsey(true);
+      }
     }
   }, []);
 
   return (
     <>
-      {loaded && allPicsInDb && (
+      {loaded && allPicsInDb && !falseyPics && (
         <Container>
           <Col lg={4} className="my-5 pt-5 mx-auto">
             <Form className="mx-auto form px-5 py-5" onSubmit={createAlbum}>
@@ -61,7 +67,7 @@ const Create = () => {
           </Col>
         </Container>
       )}
-      {!loaded && !allPicsInDb && (
+      {loaded && falseyPics && (
         <Alert variant="success">You haven´t chosen any pics</Alert>
       )}
     </>
