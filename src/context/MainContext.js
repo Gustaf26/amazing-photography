@@ -13,10 +13,13 @@ const MainContextProvider = (props) => {
   const [user, setUser] = useState("");
   const [fotograferSelected, setSelected] = useState([]);
   const [fotograferDeclined, setDeclined] = useState([]);
+  const [allPicsInDb, setAllPics] = useState();
 
   const contextValues = {
     setUser,
     user,
+    allPicsInDb,
+    setAllPics,
     setSelected,
     setDeclined,
     fotograferDeclined,

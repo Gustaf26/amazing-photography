@@ -43,9 +43,12 @@ function App() {
           </nav>
         </header>
         <Switch>
-          {/* <Route path="/albums">
-            <Albums />
-          </Route>*/}
+          <Route path="/albums">
+            {/* <Albums /> */}
+            <Route path="/create">
+              <Home />
+            </Route>
+          </Route>
           <Route path="/pics">
             <Pics />
           </Route>

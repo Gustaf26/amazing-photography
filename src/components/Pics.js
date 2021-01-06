@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { db } from "../firebase/index";
 import { useMainContext } from "../context/MainContext";
+import { useHistory } from "react-router-dom";
 
 import { Container, Row, Card, Media, Button } from "react-bootstrap";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -8,7 +9,9 @@ import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox"
 
 const Pics = () => {
   const [picsLoaded, setLoaded] = useState(false);
+  const { setAllPics } = useMainContext();
   const allPicsFix = useRef("");
+  const history = useHistory();
 
   const selectPic = (pic, ind) => {
     document.getElementById(ind).style.outline = "2px solid green";
@@ -37,7 +40,21 @@ const Pics = () => {
         return (picture.selected = false);
       }
     });
-    console.log(allPicsFix.current);
+    db.collection("pics")
+      .doc("all-pics")
+      .set({ ...allPicsFix.current })
+      .then(function () {
+        console.log("Document successfully written!");
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+  };
+
+  const createAlbum = (e) => {
+    e.preventDefault();
+    setAllPics(allPicsFix.current);
+    history.push("/albums/create");
   };
 
   useEffect(() => {
@@ -87,16 +104,9 @@ const Pics = () => {
                 </Card>
               );
             })}
-          {picsLoaded &&
-            allPicsFix.current &&
-            allPicsFix.current.map((pic, index) => {
-              if (pic.selected === true) {
-                return "pic selected";
-              }
-            })}
         </Row>
       </Container>
-      <Button className="my-3" variant="primary">
+      <Button onClick={createAlbum} className="my-3" variant="primary">
         Create Album
       </Button>
     </>
