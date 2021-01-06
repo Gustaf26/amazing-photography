@@ -77,7 +77,7 @@ const Pics = () => {
   return (
     <>
       <Container>
-        <Row lg={6} className="d-flex mt-5 mx-auto">
+        <Row lg={9} className="d-flex mt-5 mx-auto">
           {picsLoaded &&
             allPicsFix.current &&
             allPicsFix.current.map((pic, index) => {
@@ -89,7 +89,7 @@ const Pics = () => {
                   id="media"
                   key={index}
                 >
-                  <Media key={pic.id}>
+                  <Media key={pic.id} className="my-auto">
                     <img
                       width="100%"
                       height="auto"

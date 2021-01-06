@@ -55,7 +55,7 @@ const Create = () => {
                       if (pic.selected === true) {
                         return (
                           <Card className="ml-3" id="media" key={index}>
-                            <Media key={pic.id}>
+                            <Media key={pic.id} className="my-auto">
                               <img
                                 width="100%"
                                 height="auto"
