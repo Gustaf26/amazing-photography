@@ -20,10 +20,19 @@ const Create = () => {
   const [falseyPics, setFalsey] = useState(false);
   const [albumName, setAlbumName] = useState("");
   const { user, allPicsInDb, allAlbums } = useMainContext();
+  const [file, setFile] = useState(false);
   const history = useHistory();
 
   const setName = (e) => {
     setAlbumName(e.target.value);
+  };
+
+  const confirmFile = (message) => {
+    if (message === true) {
+      setFile(false);
+    } else {
+      setFile(true);
+    }
   };
 
   const createAlbum = async (e) => {
@@ -35,7 +44,7 @@ const Create = () => {
       .collection("albums")
       .doc(`${albumName.toLowerCase()}`)
       .set({
-        title: albumName,
+        title: albumName.toLowerCase(),
         cust_apppproved: false,
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
@@ -52,11 +61,6 @@ const Create = () => {
   useEffect(() => {
     if (allPicsInDb && allPicsInDb.length) {
       setLoaded(true);
-      const truthy = allPicsInDb.filter((pic) => pic.selected === true);
-      console.log(truthy);
-      if (!truthy.length) {
-        setFalsey(true);
-      }
     }
   }, [allPicsInDb]);
 
@@ -96,18 +100,18 @@ const Create = () => {
                       }
                     })}
                 </Col>
-                <UploadImage albumName={albumName} />
+                <UploadImage albumName={albumName} setErrorMsg={confirmFile} />
                 <Button className="mt-0" variant="primary" type="submit">
                   Confirm
                 </Button>
               </Form.Group>
             </Form>
+            {!file && (
+              <Alert variant="warning">You haven´t chosen any pics</Alert>
+            )}
           </Col>
         </Container>
       )}
-      {/* {loaded && falseyPics && (
-        <Alert variant="success">You haven´t chosen any pics</Alert>
-      )} */}
     </>
   );
 };

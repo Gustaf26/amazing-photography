@@ -1,29 +1,41 @@
 import React, { useCallback, useState, useEffect, useRef } from "react";
 import { db, storage } from "../firebase/index";
 import { useDropzone } from "react-dropzone";
+import Alert from "react-bootstrap";
 import { useMainContext } from "../context/MainContext";
 
-const UploadImage = ({ albumName }) => {
+const UploadImage = ({ albumName, setErrorMsg }) => {
   const [uploadProgress, setUploadProgress] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [file, setFile] = useState("");
-  const imageUrl = useRef();
+  const [file, setFile] = useState();
+  const imageUrl = useRef([]);
   const { setAllPics, allPicsInDb } = useMainContext();
 
   useEffect(() => {
+    setErrorMsg(true);
+  }, []);
+
+  useEffect(() => {
     if (!file) {
+      setErrorMsg(true);
       setUploadProgress(null);
       setUploadedImage(null);
-      setError(null);
+      setError(true);
       setIsSuccess(false);
 
       return;
     }
 
+    if (!albumName) {
+      alert("You need to set first an album name");
+      return;
+    }
+
     // reset environment
     setError(null);
+    setErrorMsg(false);
     setIsSuccess(false);
 
     // get file reference
@@ -48,31 +60,30 @@ const UploadImage = ({ albumName }) => {
         // add uploaded file to db
         if (url) {
           imageUrl.current = url;
+
+          let allPics = { ...allPicsInDb };
+          let ranNum = Math.floor(Math.random() * 1000);
+
+          db.collection("pics")
+            .doc("all-pics")
+            .set({
+              ...allPics,
+              ranNum: {
+                id: ranNum,
+                url: imageUrl.current,
+                albums: [`${albumName.toLowerCase()}`],
+                selected: true,
+              },
+            })
+            .then(function () {
+              console.log("Document successfully written!");
+            })
+            .catch(function (error) {
+              console.error("Error writing document: ", error);
+            });
         }
       });
     });
-
-    if (imageUrl.current) {
-      let allPics = { ...allPicsInDb };
-      let pic = {
-        id: Math.floor(Math.random() * 1000),
-        url: imageUrl.current,
-        albums: [`${albumName}`],
-        selected: true,
-      };
-      db.collection("pics")
-        .doc("all-pics")
-        .set({
-          ...allPics,
-          pic,
-        })
-        .then(function () {
-          console.log("Document successfully written!");
-        })
-        .catch(function (error) {
-          console.error("Error writing document: ", error);
-        });
-    }
   }, [file]);
 
   const onDrop = useCallback((acceptedFiles) => {
