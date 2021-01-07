@@ -32,7 +32,7 @@ const Create = () => {
         setFalsey(true);
       }
     }
-  }, []);
+  }, [allPicsInDb]);
 
   return (
     <>
