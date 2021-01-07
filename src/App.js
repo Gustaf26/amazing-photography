@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/Login.js";
 import Home from "./components/Home.js";
 import Pics from "./components/Pics.js";
+import Albums from "./components/Albums.js";
 import Create from "./components/Create.js";
 import { useAuth } from "./context/AuthContext";
 import { useMainContext } from "./context/MainContext";
@@ -45,7 +46,7 @@ function App() {
         </header>
         <Switch>
           <Route path="/albums">
-            {/* <Albums /> */}
+            <Albums />
             <Route path="/albums/create">
               <Create />
             </Route>

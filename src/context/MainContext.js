@@ -11,19 +11,15 @@ const useMainContext = () => {
 const MainContextProvider = (props) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState("");
-  const [fotograferSelected, setSelected] = useState([]);
-  const [fotograferDeclined, setDeclined] = useState([]);
   const [allPicsInDb, setAllPics] = useState();
+  const [allAlbums, setAlbums] = useState();
 
   const contextValues = {
     setUser,
     user,
     allPicsInDb,
     setAllPics,
-    setSelected,
-    setDeclined,
-    fotograferDeclined,
-    fotograferSelected,
+    allAlbums,
   };
 
   useEffect(() => {
@@ -34,6 +30,7 @@ const MainContextProvider = (props) => {
 
   useEffect(() => {
     let snapshotPics;
+    let snapshotAlbums;
 
     db.collection(`pics`).onSnapshot((querySnapshot) => {
       snapshotPics = [];
@@ -42,6 +39,15 @@ const MainContextProvider = (props) => {
         snapshotPics.push(doc.data());
       });
       setAllPics(Object.values(...snapshotPics));
+    });
+
+    db.collection(`albums`).onSnapshot((querySnapshot) => {
+      snapshotAlbums = [];
+
+      querySnapshot.forEach((doc) => {
+        snapshotAlbums.push(doc.data());
+      });
+      setAlbums(snapshotAlbums);
     });
 
     return setAllPics();
