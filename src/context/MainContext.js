@@ -14,12 +14,27 @@ const MainContextProvider = (props) => {
   const [allPicsInDb, setAllPics] = useState();
   const [allAlbums, setAlbums] = useState();
 
+  const resetPicsSelection = () => {
+    const allPics = [...allPicsInDb];
+    allPics.map((picture) => (picture.selected = false));
+
+    db.collection("pics")
+      .doc("all-pics")
+      .set({ ...allPics })
+      .then(function () {
+        console.log("Document successfully written!");
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+  };
   const contextValues = {
     setUser,
     user,
     allPicsInDb,
     setAllPics,
     allAlbums,
+    resetPicsSelection,
   };
 
   useEffect(() => {

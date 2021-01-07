@@ -9,7 +9,7 @@ import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox"
 
 const Pics = () => {
   const [picsLoaded, setLoaded] = useState(false);
-  const { setAllPics, allPicsInDb } = useMainContext();
+  const { setAllPics, allPicsInDb, resetPicsSelection } = useMainContext();
   const allPicsFix = useRef([]);
   const history = useHistory();
 
@@ -66,6 +66,12 @@ const Pics = () => {
       setLoaded(true);
     }
   }, [allPicsInDb]);
+
+  useEffect(() => {
+    if (allPicsInDb && allPicsInDb.length) {
+      resetPicsSelection();
+    }
+  }, []);
 
   return (
     <>

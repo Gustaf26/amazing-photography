@@ -45,11 +45,11 @@ function App() {
           </nav>
         </header>
         <Switch>
-          <Route path="/albums">
+          <Route exact path="/albums">
             <Albums />
-            <Route path="/albums/create">
-              <Create />
-            </Route>
+          </Route>
+          <Route path="/albums/create">
+            <Create />
           </Route>
           <Route path="/pics">
             <Pics />

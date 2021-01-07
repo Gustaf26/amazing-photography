@@ -28,7 +28,8 @@ const Create = () => {
 
   const createAlbum = async (e) => {
     e.preventDefault();
-    const urls = allPicsInDb.map((pic) => pic.url);
+    const truthy = allPicsInDb.filter((pic) => pic.selected === true);
+    const urls = truthy.map((pic) => pic.url);
     //const albums = {...allAlbums};
     await db
       .collection("albums")
@@ -61,7 +62,7 @@ const Create = () => {
 
   return (
     <>
-      {loaded && allPicsInDb && !falseyPics && (
+      {loaded && allPicsInDb && (
         <Container>
           <Col lg={10} className="my-5 pt-5 mx-auto">
             <Form className="mx-auto form px-5 py-5" onSubmit={createAlbum}>
@@ -95,7 +96,7 @@ const Create = () => {
                       }
                     })}
                 </Col>
-                <UploadImage />
+                <UploadImage albumName={albumName} />
                 <Button className="mt-0" variant="primary" type="submit">
                   Confirm
                 </Button>
@@ -104,9 +105,9 @@ const Create = () => {
           </Col>
         </Container>
       )}
-      {loaded && falseyPics && (
+      {/* {loaded && falseyPics && (
         <Alert variant="success">You haven´t chosen any pics</Alert>
-      )}
+      )} */}
     </>
   );
 };

@@ -3,7 +3,7 @@ import { db, storage } from "../firebase/index";
 import { useDropzone } from "react-dropzone";
 import { useMainContext } from "../context/MainContext";
 
-const UploadImage = () => {
+const UploadImage = ({ albumName }) => {
   const [uploadProgress, setUploadProgress] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [error, setError] = useState(null);
@@ -57,7 +57,7 @@ const UploadImage = () => {
       let pic = {
         id: Math.floor(Math.random() * 1000),
         url: imageUrl.current,
-        albums: [],
+        albums: [`${albumName}`],
         selected: true,
       };
       db.collection("pics")
