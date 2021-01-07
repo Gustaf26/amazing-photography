@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 // import { useAuth } from "../context/AuthContext";
 import { useMainContext } from "../context/MainContext";
+import UploadImage from "./UploadImage";
 import "../App.css";
 
 const Create = () => {
@@ -68,6 +69,7 @@ const Create = () => {
                       }
                     })}
                 </Col>
+                <UploadImage />
                 <Button className="my-3" variant="primary" type="submit">
                   Confirm
                 </Button>

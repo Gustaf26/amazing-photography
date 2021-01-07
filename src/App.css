@@ -73,3 +73,16 @@
 .not-selected {
   outline: 2px solid red;
 }
+
+.upload-dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgrey;
+  border: 2px dotted black;
+  border-radius: 5px;
+  color: black;
+  width: 50vw;
+  height: 10vh;
+  font-size: large;
+}
