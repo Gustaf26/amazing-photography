@@ -9,8 +9,8 @@ import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox"
 
 const Pics = () => {
   const [picsLoaded, setLoaded] = useState(false);
-  const { setAllPics } = useMainContext();
-  const allPicsFix = useRef("");
+  const { setAllPics, allPicsInDb } = useMainContext();
+  const allPicsFix = useRef([]);
   const history = useHistory();
 
   const selectPic = (pic, ind) => {
@@ -18,6 +18,7 @@ const Pics = () => {
 
     allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
+        console.log({ ...allPicsFix.current });
         return (picture.selected = true);
       }
     });
@@ -37,6 +38,7 @@ const Pics = () => {
     // document.getElementById(ind).style.outline = "2px solid red";
     allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
+        console.log({ ...allPicsFix.current });
         return (picture.selected = false);
       }
     });
@@ -58,21 +60,12 @@ const Pics = () => {
   };
 
   useEffect(() => {
-    let snapshotPics;
+    if (allPicsInDb && allPicsInDb.length) {
+      allPicsFix.current = [...allPicsInDb];
 
-    db.collection(`pics`).onSnapshot((querySnapshot) => {
-      snapshotPics = [];
-      setLoaded(false);
-
-      querySnapshot.forEach((doc) => {
-        snapshotPics.push(doc.data());
-      });
-      allPicsFix.current = Object.values(...snapshotPics);
       setLoaded(true);
-    });
-
-    return setLoaded(false);
-  }, []);
+    }
+  }, [allPicsInDb]);
 
   return (
     <>
