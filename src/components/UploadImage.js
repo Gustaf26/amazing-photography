@@ -1,6 +1,7 @@
-import React, { useCallback, useState, useEffect } from "react";
-import { storage } from "../firebase/index";
+import React, { useCallback, useState, useEffect, useRef } from "react";
+import { db, storage } from "../firebase/index";
 import { useDropzone } from "react-dropzone";
+import { useMainContext } from "../context/MainContext";
 
 const UploadImage = () => {
   const [uploadProgress, setUploadProgress] = useState(null);
@@ -8,6 +9,8 @@ const UploadImage = () => {
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [file, setFile] = useState("");
+  const imageUrl = useRef();
+  const { setAllPics, allPicsInDb } = useMainContext();
 
   useEffect(() => {
     if (!file) {
@@ -43,9 +46,33 @@ const UploadImage = () => {
       // retrieve URL to uploaded file
       snapshot.ref.getDownloadURL().then((url) => {
         // add uploaded file to db
-        console.log(url);
+        if (url) {
+          imageUrl.current = url;
+        }
       });
     });
+
+    if (imageUrl.current) {
+      let allPics = { ...allPicsInDb };
+      let pic = {
+        id: Math.floor(Math.random() * 1000),
+        url: imageUrl.current,
+        albums: [],
+        selected: true,
+      };
+      db.collection("pics")
+        .doc("all-pics")
+        .set({
+          ...allPics,
+          pic,
+        })
+        .then(function () {
+          console.log("Document successfully written!");
+        })
+        .catch(function (error) {
+          console.error("Error writing document: ", error);
+        });
+    }
   }, [file]);
 
   const onDrop = useCallback((acceptedFiles) => {

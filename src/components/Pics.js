@@ -77,7 +77,9 @@ const Pics = () => {
               return (
                 <Card
                   className={
-                    pic.selected ? "pic-selected ml-3" : "not-selected ml-3"
+                    pic.selected
+                      ? "pic-selected ml-3 mb-3"
+                      : "not-selected ml-3 mb-3"
                   }
                   id="media"
                   key={index}
