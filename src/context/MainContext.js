@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { db } from "../firebase";
 import { Button, Spinner } from "react-bootstrap";
 
@@ -13,6 +13,8 @@ const MainContextProvider = (props) => {
   const [user, setUser] = useState("");
   const [allPicsInDb, setAllPics] = useState();
   const [allAlbums, setAlbums] = useState();
+  const [currentAlbum, setCurrentAlbum] = useState("");
+  const [albumPics, setAlbumPics] = useState([]);
 
   const resetPicsSelection = () => {
     const allPics = [...allPicsInDb];
@@ -35,6 +37,10 @@ const MainContextProvider = (props) => {
     setAllPics,
     allAlbums,
     resetPicsSelection,
+    setCurrentAlbum,
+    currentAlbum,
+    albumPics,
+    setAlbumPics,
   };
 
   useEffect(() => {
@@ -42,6 +48,32 @@ const MainContextProvider = (props) => {
       setLoading(false);
     }
   }, [user]);
+
+  useEffect(() => {
+    let picsInAlbum = [];
+    setAlbumPics([]);
+    if (currentAlbum && currentAlbum.photo_urls) {
+      picsInAlbum = currentAlbum.photo_urls.map((photo) => photo);
+
+      if (picsInAlbum.length) {
+        let emptyArr;
+        emptyArr = [];
+        allPicsInDb.map((pic) => {
+          picsInAlbum.map((albumPic) => {
+            if (albumPic === pic.url) {
+              emptyArr.push(pic);
+            }
+          });
+        });
+        if (emptyArr.length) {
+          console.log(emptyArr);
+          setAlbumPics(emptyArr);
+        }
+
+        emptyArr = [];
+      }
+    }
+  }, [currentAlbum]);
 
   useEffect(() => {
     let snapshotPics;

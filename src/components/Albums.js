@@ -2,26 +2,19 @@ import { useEffect, useState, useRef } from "react";
 import { useMainContext } from "../context/MainContext";
 import { useHistory } from "react-router-dom";
 
-import { Container, Row, Card, Media, Button } from "react-bootstrap";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import { Container, Row, Card, Media } from "react-bootstrap";
 
 const Albums = () => {
   const [albumsLoaded, setLoaded] = useState(false);
-  const { allAlbums } = useMainContext();
+  const { allAlbums, setCurrentAlbum } = useMainContext();
   const allAlbumsFix = useRef([]);
   const history = useHistory();
 
-  const selectAlbum = (pic, ind) => {
-    // document.getElementById(ind).style.outline = "2px solid green";
-  };
-
-  const deleteSelection = (pic, ind) => {};
-
-  const updateAlbum = (e) => {
-    e.preventDefault();
-
-    history.push("/albums/:albumId/update");
+  const goToAlbum = (alb) => {
+    setCurrentAlbum(alb);
+    setTimeout(() => {
+      history.push(`/albums/${alb.code}`);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -43,7 +36,11 @@ const Albums = () => {
                 <Card className="ml-3 mb-3" id="media" key={index}>
                   <Card.Text className="mt-2">Album:</Card.Text>
                   <h2>{alb.title.toUpperCase()}</h2>
-                  <Media key={alb.title} className="my-auto">
+                  <Media
+                    key={alb.title}
+                    className="my-auto"
+                    onClick={() => goToAlbum(alb)}
+                  >
                     <img
                       width="100%"
                       height="auto"
@@ -51,23 +48,14 @@ const Albums = () => {
                       alt="Generic placeholder"
                     />
                   </Media>
-                  <div className="d-flex mx-auto my-2">
-                    <AddCircleOutlineIcon
-                      //  onClick={() => selectPic(pic.url, index)}
-                      color="primary"
-                    />
-                    <IndeterminateCheckBoxIcon
-                      // onClick={() => deleteSelection(pic.url, index)}
-                      color="secondary"
-                    />
-                  </div>
-                  <Button
+
+                  {/* <Button
                     onClick={updateAlbum}
                     className="my-3"
                     variant="primary"
                   >
                     Update Album
-                  </Button>
+                  </Button> */}
                 </Card>
               );
             })}

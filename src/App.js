@@ -3,6 +3,7 @@ import Login from "./components/Login.js";
 import Home from "./components/Home.js";
 import Pics from "./components/Pics.js";
 import Albums from "./components/Albums.js";
+import Album from "./components/Album";
 import Create from "./components/Create.js";
 import { useAuth } from "./context/AuthContext";
 import { useMainContext } from "./context/MainContext";
@@ -50,6 +51,9 @@ function App() {
           </Route>
           <Route path="/albums/create">
             <Create />
+          </Route>
+          <Route path="/albums/:albumId">
+            <Album />
           </Route>
           <Route path="/pics">
             <Pics />
