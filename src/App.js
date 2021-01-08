@@ -5,6 +5,7 @@ import Pics from "./components/Pics.js";
 import Albums from "./components/Albums.js";
 import Album from "./components/Album";
 import Create from "./components/Create.js";
+import Update from "./components/Update";
 import { useAuth } from "./context/AuthContext";
 import { useMainContext } from "./context/MainContext";
 import { Row } from "react-bootstrap";
@@ -52,8 +53,11 @@ function App() {
           <Route path="/albums/create">
             <Create />
           </Route>
-          <Route path="/albums/:albumId">
+          <Route exact path="/albums/:albumId">
             <Album />
+          </Route>
+          <Route path="/albums/:albumId/update">
+            <Update />
           </Route>
           <Route path="/pics">
             <Pics />

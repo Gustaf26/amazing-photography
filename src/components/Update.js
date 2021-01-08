@@ -15,7 +15,7 @@ import { useMainContext } from "../context/MainContext";
 import UploadImage from "./UploadImage";
 import "../App.css";
 
-const Create = () => {
+const Update = () => {
   const [loaded, setLoaded] = useState(false);
   const [falseyPics, setFalsey] = useState(false);
   const [albumName, setAlbumName] = useState("");
@@ -48,7 +48,6 @@ const Create = () => {
         cust_apppproved: false,
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
-        code: Math.floor(Math.random() * 10000000),
       })
       .then(function () {
         console.log("Document successfully written!");
@@ -73,7 +72,7 @@ const Create = () => {
             <Form className="mx-auto form px-5 py-5" onSubmit={createAlbum}>
               <Form.Group>
                 <Form.Label>
-                  <h2>CREATE YOUR ALBUM</h2>
+                  <h2>UPDATE YOUR ALBUM</h2>
                 </Form.Label>
                 <Form.Control
                   className="my-3"
@@ -117,4 +116,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Update;

@@ -13,25 +13,41 @@ const Album = () => {
     setAllPics,
     resetPicsSelection,
     setAlbumPics,
+    allPicsInDb,
     currentAlbum,
     albumPics,
   } = useMainContext();
-  const thisAlbumFix = useRef([]);
+  const allPicsFix = useRef([]);
+  const [thisAlbumFix, setAlbumFix] = useState([]);
   const history = useHistory();
 
   const selectPic = (pic, ind) => {
-    // document.getElementById(ind).style.outline = "2px solid green";
-
-    thisAlbumFix.current.map((picture) => {
+    allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
-        console.log({ ...thisAlbumFix.current });
+        console.log({ ...allPicsFix.current });
         return (picture.selected = true);
       }
     });
 
+    let emptyArr;
+
+    emptyArr = [...thisAlbumFix];
+
+    allPicsFix.current.map((pic) => {
+      emptyArr.map((albumPic, index) => {
+        if (albumPic.url === pic.url && pic.selected === true) {
+          emptyArr.splice(index, 1);
+          emptyArr.push(pic);
+        }
+      });
+    });
+
+    setAlbumFix([...emptyArr]);
+    emptyArr = [];
+
     db.collection("pics")
       .doc("all-pics")
-      .set({ ...thisAlbumFix.current })
+      .set({ ...allPicsFix.current })
       .then(function () {
         console.log("Document successfully written!");
       })
@@ -41,16 +57,32 @@ const Album = () => {
   };
 
   const deleteSelection = (pic, ind) => {
-    // document.getElementById(ind).style.outline = "2px solid red";
-    thisAlbumFix.current.map((picture) => {
+    allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
-        console.log({ ...thisAlbumFix.current });
+        console.log({ ...allPicsFix.current });
         return (picture.selected = false);
       }
     });
+
+    let emptyArr;
+
+    emptyArr = [...thisAlbumFix];
+
+    allPicsFix.current.map((pic) => {
+      emptyArr.map((albumPic, index) => {
+        if (albumPic.url === pic.url && pic.selected === false) {
+          emptyArr.splice(index, 1);
+          emptyArr.push(pic);
+        }
+      });
+    });
+
+    setAlbumFix([...emptyArr]);
+    emptyArr = [];
+
     db.collection("pics")
       .doc("all-pics")
-      .set({ ...thisAlbumFix.current })
+      .set({ ...allPicsFix.current })
       .then(function () {
         console.log("Document successfully written!");
       })
@@ -61,26 +93,35 @@ const Album = () => {
 
   const updateAlbum = (e) => {
     e.preventDefault();
-    //setAllPics(allPicsFix.current);
+    setAllPics(allPicsFix.current);
     history.push(`/albums/${currentAlbum.code}/update`);
   };
 
   useEffect(() => {
     if (albumPics && albumPics.length) {
       resetPicsSelection();
-      thisAlbumFix.current.push(...albumPics);
+      //   thisAlbumFix.current.push(...albumPics);
+      setAlbumFix([...albumPics]);
 
       setLoaded(true);
     }
   }, [albumPics]);
+
+  useEffect(() => {
+    if (allPicsInDb && allPicsInDb.length) {
+      allPicsFix.current = [...allPicsInDb];
+
+      setLoaded(true);
+    }
+  }, [allPicsInDb]);
 
   return (
     <>
       <Container>
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {picsLoaded &&
-            thisAlbumFix.current &&
-            thisAlbumFix.current.map((pic, index) => {
+            thisAlbumFix.length &&
+            thisAlbumFix.map((pic, index) => {
               return (
                 <Card
                   className={
