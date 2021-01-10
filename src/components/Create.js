@@ -21,6 +21,7 @@ const Create = () => {
   const [albumName, setAlbumName] = useState("");
   const { user, allPicsInDb, allAlbums } = useMainContext();
   const [file, setFile] = useState(false);
+  const [code, setCode] = useState("");
   const history = useHistory();
 
   const setName = (e) => {
@@ -40,6 +41,8 @@ const Create = () => {
     const truthy = allPicsInDb.filter((pic) => pic.selected === true);
     const urls = truthy.map((pic) => pic.url);
     //const albums = {...allAlbums};
+    let ranNum;
+    ranNum = Math.floor(Math.random() * 10000000);
     await db
       .collection("albums")
       .doc(`${albumName.toLowerCase()}`)
@@ -48,11 +51,15 @@ const Create = () => {
         cust_apppproved: false,
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
-        code: Math.floor(Math.random() * 10000000),
+        code: ranNum,
       })
       .then(function () {
         console.log("Document successfully written!");
-        history.push("/albums");
+        setLoaded(false);
+        setCode(ranNum);
+        setTimeout(() => {
+          history.push("/albums");
+        }, 5000);
       })
       .catch(function (error) {
         console.error("Error writing document: ", error);
@@ -112,6 +119,15 @@ const Create = () => {
             )}
           </Col>
         </Container>
+      )}
+      {code && (
+        <Alert variant="success">
+          <h2>Album succesfully created!</h2>
+          <p>
+            The album code for your customer is <strong>{code}</strong>
+          </p>
+          <p>You´ll be soon redirected to your albums, please wait ...</p>
+        </Alert>
       )}
     </>
   );
