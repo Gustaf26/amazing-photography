@@ -19,7 +19,7 @@ const Update = () => {
   const [loaded, setLoaded] = useState(false);
   const [falseyPics, setFalsey] = useState(false);
   const [albumName, setAlbumName] = useState("");
-  const { user, allPicsInDb, allAlbums } = useMainContext();
+  const { user, allPicsInDb, allAlbums, currentAlbum } = useMainContext();
   const [file, setFile] = useState(false);
   const history = useHistory();
 
@@ -35,11 +35,17 @@ const Update = () => {
     }
   };
 
-  const createAlbum = async (e) => {
+  const updateAlbum = async (e) => {
     e.preventDefault();
+
     const truthy = allPicsInDb.filter((pic) => pic.selected === true);
     const urls = truthy.map((pic) => pic.url);
     //const albums = {...allAlbums};
+    if (currentAlbum.title !== albumName) {
+      db.collection("albums")
+        .doc(`${currentAlbum.title.toLowerCase()}`)
+        .delete();
+    }
     await db
       .collection("albums")
       .doc(`${albumName.toLowerCase()}`)
@@ -48,6 +54,7 @@ const Update = () => {
         cust_apppproved: false,
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
+        code: Math.floor(Math.random() * 10000000),
       })
       .then(function () {
         console.log("Document successfully written!");
@@ -69,7 +76,7 @@ const Update = () => {
       {loaded && allPicsInDb && (
         <Container>
           <Col lg={10} className="my-5 pt-5 mx-auto">
-            <Form className="mx-auto form px-5 py-5" onSubmit={createAlbum}>
+            <Form className="mx-auto form px-5 py-5" onSubmit={updateAlbum}>
               <Form.Group>
                 <Form.Label>
                   <h2>UPDATE YOUR ALBUM</h2>
@@ -77,7 +84,11 @@ const Update = () => {
                 <Form.Control
                   className="my-3"
                   type="text"
-                  placeholder="Set an album name"
+                  placeholder={
+                    currentAlbum
+                      ? currentAlbum.title.toUpperCase()
+                      : "Set an album name"
+                  }
                   onChange={setName}
                   required
                 />
