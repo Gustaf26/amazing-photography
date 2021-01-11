@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { db } from "../firebase/index";
 import { useMainContext } from "../context/MainContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Container, Row, Card, Media, Button } from "react-bootstrap";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -19,7 +19,7 @@ const Album = () => {
   } = useMainContext();
   const allPicsFix = useRef([]);
   const [thisAlbumFix, setAlbumFix] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const selectPic = (pic, ind) => {
     allPicsFix.current.map((picture) => {
@@ -94,7 +94,7 @@ const Album = () => {
   const updateAlbum = (e) => {
     e.preventDefault();
     setAllPics(allPicsFix.current);
-    history.push(`/albums/${currentAlbum.code}/update`);
+    navigate(`/albums/${currentAlbum.code}/update`);
   };
 
   useEffect(() => {
@@ -132,7 +132,7 @@ const Album = () => {
                   id="media"
                   key={index}
                 >
-                  <Media key={pic.id} className="my-auto">
+                  <Media key={pic.id} className="pic my-auto">
                     <img
                       width="100%"
                       height="auto"

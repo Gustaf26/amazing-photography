@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useState, useRef } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { Button, Spinner } from "react-bootstrap";
+// import { useParams } from "react-router-dom";
 
 const MainContext = createContext();
 
@@ -15,6 +16,8 @@ const MainContextProvider = (props) => {
   const [allAlbums, setAlbums] = useState();
   const [currentAlbum, setCurrentAlbum] = useState("");
   const [albumPics, setAlbumPics] = useState([]);
+  const [clientAlbum, setClientAlbum] = useState({});
+  // const { albumId } = useParams();
 
   const resetPicsSelection = () => {
     const allPics = [...allPicsInDb];
@@ -41,6 +44,8 @@ const MainContextProvider = (props) => {
     currentAlbum,
     albumPics,
     setAlbumPics,
+    clientAlbum,
+    setClientAlbum,
   };
 
   useEffect(() => {

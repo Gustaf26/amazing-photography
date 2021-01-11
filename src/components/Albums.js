@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useMainContext } from "../context/MainContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Container, Row, Card, Media } from "react-bootstrap";
 
@@ -8,12 +8,12 @@ const Albums = () => {
   const [albumsLoaded, setLoaded] = useState(false);
   const { allAlbums, setCurrentAlbum } = useMainContext();
   const allAlbumsFix = useRef([]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const goToAlbum = (alb) => {
     setCurrentAlbum(alb);
     setTimeout(() => {
-      history.push(`/albums/${alb.code}`);
+      navigate(`/albums/${alb.code}`);
     }, 1000);
   };
 

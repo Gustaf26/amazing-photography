@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Form,
   Button,
@@ -22,7 +22,7 @@ const Update = () => {
   const { user, allPicsInDb, allAlbums, currentAlbum } = useMainContext();
   const [code, setCode] = useState("");
   const [file, setFile] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const setName = (e) => {
     setAlbumName(e.target.value);
@@ -64,7 +64,7 @@ const Update = () => {
         setLoaded(false);
         setCode(ranNum);
         setTimeout(() => {
-          history.push("/albums");
+          navigate("/albums");
         }, 5000);
       })
       .catch(function (error) {

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./components/Login.js";
 import Home from "./components/Home.js";
 import Pics from "./components/Pics.js";
@@ -6,13 +6,14 @@ import Albums from "./components/Albums.js";
 import Album from "./components/Album";
 import Create from "./components/Create.js";
 import Update from "./components/Update";
+import Albumreview from "./components/Albumreview";
 import { useAuth } from "./context/AuthContext";
 import { useMainContext } from "./context/MainContext";
 import { Row } from "react-bootstrap";
 import "./App.css";
 
 function App() {
-  const { user } = useMainContext();
+  const { user, allAlbums } = useMainContext();
   const { logout } = useAuth();
 
   return (
@@ -46,7 +47,7 @@ function App() {
             </Row>
           </nav>
         </header>
-        <Switch>
+        <Routes>
           <Route exact path="/albums">
             <Albums />
           </Route>
@@ -59,16 +60,21 @@ function App() {
           <Route path="/albums/:albumId/update">
             <Update />
           </Route>
+          {allAlbums && allAlbums.length && (
+            <Route path="/review/:albumId">
+              <Albumreview />
+            </Route>
+          )}
           <Route path="/pics">
             <Pics />
           </Route>
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Home />
           </Route>
-        </Switch>
+        </Routes>
       </div>
     </Router>
   );

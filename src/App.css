@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
   height: 15vh;
@@ -46,13 +35,6 @@
   border-radius: 5px;
 }
 
-#media {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 30%;
-}
-
 #pic-message {
   position: absolute;
   padding-top: 3rem;
@@ -67,11 +49,17 @@
 }
 
 .pic-selected {
-  outline: 2px solid green;
+  padding: 1.5rem;
+  border: 5px solid rgb(57, 129, 57);
+  border-radius: 5px;
+  box-shadow: 0 0 10pt 2pt gray;
 }
 
 .not-selected {
-  outline: 2px solid red;
+  border: 5px solid rgb(238, 78, 78);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10pt 2pt gray;
 }
 
 .upload-dropzone {
@@ -85,4 +73,24 @@
   width: 50vw;
   height: 10vh;
   font-size: large;
+}
+
+@media screen and (max-width: 700px) {
+  #media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 701px) {
+  #media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 29%;
+    margin: 0.5rem;
+  }
 }

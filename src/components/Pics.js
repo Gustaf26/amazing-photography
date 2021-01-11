@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { db } from "../firebase/index";
 import { useMainContext } from "../context/MainContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Container, Row, Card, Media, Button } from "react-bootstrap";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -11,7 +11,7 @@ const Pics = () => {
   const [picsLoaded, setLoaded] = useState(false);
   const { setAllPics, allPicsInDb, resetPicsSelection } = useMainContext();
   const allPicsFix = useRef([]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const selectPic = (pic, ind) => {
     // document.getElementById(ind).style.outline = "2px solid green";
@@ -56,7 +56,7 @@ const Pics = () => {
   const createAlbum = (e) => {
     e.preventDefault();
     setAllPics(allPicsFix.current);
-    history.push("/albums/create");
+    navigate("/albums/create");
   };
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const Pics = () => {
   return (
     <>
       <Container>
-        <Row lg={9} className="d-flex mt-5 mx-auto">
+        <Row lg={9} md={10} className="d-flex mt-5 mx-auto">
           {picsLoaded &&
             allPicsFix.current &&
             allPicsFix.current.map((pic, index) => {
@@ -90,7 +90,7 @@ const Pics = () => {
                   id="media"
                   key={index}
                 >
-                  <Media key={pic.id} className="my-auto">
+                  <Media key={pic.id} className="pic my-auto">
                     <img
                       width="100%"
                       height="auto"
