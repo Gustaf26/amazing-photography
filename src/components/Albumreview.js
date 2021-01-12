@@ -109,7 +109,7 @@ const Albumreview = () => {
       .doc(`${clientAlbum.title.toLowerCase()}`)
       .set({
         title: clientAlbum.title.toLowerCase(),
-        cust_apppproved: true,
+        cust_approved: true,
         photo_urls: [...emptyArr],
         code: ranNum,
       })

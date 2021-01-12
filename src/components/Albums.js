@@ -38,7 +38,7 @@ const Albums = () => {
                   <h2>{alb.title.toUpperCase()}</h2>
                   <Media
                     key={alb.title}
-                    className="my-auto"
+                    className="my-auto photo"
                     onClick={() => goToAlbum(alb)}
                   >
                     <img
@@ -51,6 +51,9 @@ const Albums = () => {
                       }
                       alt="Generic placeholder"
                     />
+                    {alb.cust_approved === true && (
+                      <p className="custumer_approved"> Customer approved</p>
+                    )}
                   </Media>
                 </Card>
               );

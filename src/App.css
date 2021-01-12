@@ -62,6 +62,25 @@
   box-shadow: 0 0 10pt 2pt gray;
 }
 
+.photo {
+  position: relative;
+}
+
+.custumer_approved {
+  position: absolute;
+  padding: 1rem;
+  margin-top: 20%;
+  margin-right: auto;
+  margin-left: 5%;
+  width: 90%;
+  text-align: center;
+  border: 5px solid rgb(15, 223, 15);
+  color: rgb(15, 223, 15);
+  font-size: x-large;
+  font-weight: bold;
+  transform: rotate(20deg);
+}
+
 .upload-dropzone {
   display: flex;
   align-items: center;

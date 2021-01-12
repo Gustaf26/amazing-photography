@@ -48,7 +48,7 @@ const Create = () => {
       .doc(`${albumName.toLowerCase()}`)
       .set({
         title: albumName.toLowerCase(),
-        cust_apppproved: false,
+        cust_approved: false,
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
         code: ranNum,
