@@ -81,15 +81,49 @@ const Albumreview = () => {
     }
   };
 
-  const confirmAlbum = (e) => {
+  const confirmAlbum = async (e) => {
     e.preventDefault();
     setLoaded(false);
-    setAlert(true);
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
-    //setAllPics(allPicsFix.current);
-    //navigate(`/albums/${currentAlbum.code}/update`);
+
+    if (quantity.current === 0) {
+      alert("You need to choose at least 1 picture");
+      return;
+    }
+
+    await db
+      .collection("albums")
+      .doc(`${clientAlbum.title.toLowerCase()}`)
+      .delete();
+
+    let ranNum;
+    ranNum = Math.floor(Math.random() * 10000000);
+
+    let emptyArr;
+    emptyArr = [];
+    clientAlbum.photo_urls.map((photo) =>
+      photo.selected === true ? emptyArr.push(photo.url) : null
+    );
+
+    await db
+      .collection("albums")
+      .doc(`${clientAlbum.title.toLowerCase()}`)
+      .set({
+        title: clientAlbum.title.toLowerCase(),
+        cust_apppproved: true,
+        photo_urls: [...emptyArr],
+        code: ranNum,
+      })
+      .then(function () {
+        console.log("Document successfully written!");
+        setLoaded(false);
+        setAlert(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
   };
 
   useEffect(() => {
@@ -111,7 +145,6 @@ const Albumreview = () => {
     });
     if (emptyObj) {
       setClientAlbum(emptyObj);
-
       setLoaded(true);
     }
   }, []);
@@ -119,12 +152,18 @@ const Albumreview = () => {
   return (
     <>
       <Container>
-        {clientAlbum && clientAlbum.photo_urls && !alert && (
-          <Alert variant="warning">
-            You have chosen {quantity.current} of{" "}
-            {clientAlbum.photo_urls.length} photos
-          </Alert>
-        )}
+        <Col lg={12}>
+          {clientAlbum && clientAlbum.photo_urls && !alert ? (
+            <Alert variant="warning">
+              You have chosen {quantity.current} of{" "}
+              {clientAlbum.photo_urls.length} photos
+            </Alert>
+          ) : (
+            <Alert variant="success">
+              You have successfully sent your pictures to our database
+            </Alert>
+          )}
+        </Col>
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {picsLoaded &&
             clientAlbum &&
@@ -158,13 +197,6 @@ const Albumreview = () => {
                 </Card>
               );
             })}
-          {!picsLoaded && alert && (
-            <Col lg={12}>
-              <Alert variant="success">
-                You have successfully sent your pictures to our database
-              </Alert>
-            </Col>
-          )}
         </Row>
       </Container>
       {picsLoaded && (

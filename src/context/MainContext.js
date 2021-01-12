@@ -17,7 +17,6 @@ const MainContextProvider = (props) => {
   const [currentAlbum, setCurrentAlbum] = useState("");
   const [albumPics, setAlbumPics] = useState([]);
   const [clientAlbum, setClientAlbum] = useState({});
-  // const { albumId } = useParams();
 
   const resetPicsSelection = () => {
     const allPics = [...allPicsInDb];

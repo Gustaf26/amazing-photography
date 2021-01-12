@@ -44,18 +44,14 @@ const Albums = () => {
                     <img
                       width="100%"
                       height="auto"
-                      src={alb.photo_urls[0]}
+                      src={
+                        alb.photo_urls[0].url
+                          ? alb.photo_urls[0].url
+                          : alb.photo_urls[0]
+                      }
                       alt="Generic placeholder"
                     />
                   </Media>
-
-                  {/* <Button
-                    onClick={updateAlbum}
-                    className="my-3"
-                    variant="primary"
-                  >
-                    Update Album
-                  </Button> */}
                 </Card>
               );
             })}
