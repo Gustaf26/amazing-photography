@@ -29,6 +29,7 @@ const Albumreview = () => {
   const navigate = useNavigate();
   const { albumId } = useParams();
   const [alert, setAlert] = useState(false);
+  const quantity = useRef(0);
 
   const selectPic = (url, ind) => {
     let emptyArr;
@@ -38,13 +39,14 @@ const Albumreview = () => {
     fullArr = [...clientAlbum.photo_urls];
 
     fullArr.map((photo, index) => {
-      if (photo === url) {
+      if (photo === url || photo.url === url) {
         if (photo.selected) {
-          alert("Picture already selected");
           return;
+        } else {
+          fullArr.splice(index, 1);
+          fullArr.push({ url: photo.url ? photo.url : url, selected: true });
+          quantity.current += 1;
         }
-        fullArr.splice(index, 1);
-        fullArr.push({ url: photo.url ? photo.url : url, selected: true });
       }
     });
     if (fullArr.length) {
@@ -62,13 +64,14 @@ const Albumreview = () => {
     fullArr = [...clientAlbum.photo_urls];
 
     fullArr.map((photo, index) => {
-      if (photo === url) {
+      if (photo === url || photo.url === url) {
         if (!photo.selected) {
-          alert("Picture already dismissed");
           return;
+        } else {
+          fullArr.splice(index, 1);
+          fullArr.push({ url: photo.url, selected: false });
+          quantity.current -= 1;
         }
-        fullArr.splice(index, 1);
-        fullArr.push({ url: photo.url, selected: false });
       }
     });
     if (fullArr.length) {
@@ -116,6 +119,12 @@ const Albumreview = () => {
   return (
     <>
       <Container>
+        {clientAlbum && clientAlbum.photo_urls && !alert && (
+          <Alert variant="warning">
+            You have chosen {quantity.current} of{" "}
+            {clientAlbum.photo_urls.length} photos
+          </Alert>
+        )}
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {picsLoaded &&
             clientAlbum &&
@@ -160,7 +169,7 @@ const Albumreview = () => {
       </Container>
       {picsLoaded && (
         <Button onClick={confirmAlbum} className="my-3" variant="primary">
-          Confirm album
+          Confirm and send
         </Button>
       )}
     </>
