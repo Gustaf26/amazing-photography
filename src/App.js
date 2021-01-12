@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import SimpleReactLightbox from "simple-react-lightbox";
 import Login from "./components/Login.js";
 import Home from "./components/Home.js";
 import Pics from "./components/Pics.js";
@@ -17,66 +18,68 @@ function App() {
   const { logout } = useAuth();
 
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <nav>
-            <Row sm={12} md={10} lg={12}>
-              <ul className="mt-3 main-nav d-flex">
-                <li id="home-icon" className="pr-5 ml-0 my-2">
-                  <Link to="/">Amazing Photography</Link>
-                </li>
-                {user ? (
-                  <ul className="d-flex list-nav">
-                    <li className="px-3">
-                      <Link to="/albums">Albums</Link>
-                    </li>
-                    <li className="px-3">
-                      <Link to="/pics">Pics</Link>
-                    </li>
-                    <li className="px-3 mt-3">
-                      <p onClick={logout}>Logout</p>
-                    </li>
-                  </ul>
-                ) : (
-                  <li className="px-3 my-2">
-                    <Link to="/login">Login</Link>
+    <SimpleReactLightbox>
+      <Router>
+        <div className="App">
+          <header className="App-header">
+            <nav>
+              <Row sm={12} md={10} lg={12}>
+                <ul className="mt-3 main-nav d-flex">
+                  <li id="home-icon" className="pr-5 ml-0 my-2">
+                    <Link to="/">Amazing Photography</Link>
                   </li>
-                )}
-              </ul>
-            </Row>
-          </nav>
-        </header>
-        <Routes>
-          <Route exact path="/albums">
-            <Albums />
-          </Route>
-          <Route path="/albums/create">
-            <Create />
-          </Route>
-          <Route exact path="/albums/:albumId">
-            <Album />
-          </Route>
-          <Route path="/albums/:albumId/update">
-            <Update />
-          </Route>
-          {allAlbums && allAlbums.length && (
-            <Route path="/review/:albumId">
-              <Albumreview />
+                  {user ? (
+                    <ul className="d-flex list-nav">
+                      <li className="px-3">
+                        <Link to="/albums">Albums</Link>
+                      </li>
+                      <li className="px-3">
+                        <Link to="/pics">Pics</Link>
+                      </li>
+                      <li className="px-3 mt-3">
+                        <p onClick={logout}>Logout</p>
+                      </li>
+                    </ul>
+                  ) : (
+                    <li className="px-3 my-2">
+                      <Link to="/login">Login</Link>
+                    </li>
+                  )}
+                </ul>
+              </Row>
+            </nav>
+          </header>
+          <Routes>
+            <Route exact path="/albums">
+              <Albums />
             </Route>
-          )}
-          <Route path="/pics">
-            <Pics />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/">
-            <Home />
-          </Route>
-        </Routes>
-      </div>
-    </Router>
+            <Route path="/albums/create">
+              <Create />
+            </Route>
+            <Route exact path="/albums/:albumId">
+              <Album />
+            </Route>
+            <Route path="/albums/:albumId/update">
+              <Update />
+            </Route>
+            {allAlbums && allAlbums.length && (
+              <Route path="/review/:albumId">
+                <Albumreview />
+              </Route>
+            )}
+            <Route path="/pics">
+              <Pics />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/">
+              <Home />
+            </Route>
+          </Routes>
+        </div>
+      </Router>
+    </SimpleReactLightbox>
   );
 }
 

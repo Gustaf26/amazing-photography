@@ -138,6 +138,7 @@ const Albumreview = () => {
     let emptyObj;
 
     emptyObj = [];
+    setAlert(false);
     allAlbums.map((alb) => {
       if (alb.code === Number(albumId)) {
         emptyObj = { ...alb };
@@ -199,7 +200,7 @@ const Albumreview = () => {
             })}
         </Row>
       </Container>
-      {picsLoaded && (
+      {!alert && clientAlbum && clientAlbum.photo_urls && (
         <Button onClick={confirmAlbum} className="my-3" variant="primary">
           Confirm and send
         </Button>
