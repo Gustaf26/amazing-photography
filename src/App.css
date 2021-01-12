@@ -94,7 +94,7 @@
   font-size: large;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 760px) {
   #media {
     display: flex;
     flex-direction: column;
@@ -104,7 +104,7 @@
   }
 }
 
-@media screen and (min-width: 701px) {
+@media screen and (min-width: 761px) {
   #media {
     display: flex;
     flex-direction: column;
