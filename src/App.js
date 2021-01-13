@@ -50,26 +50,30 @@ function App() {
             </nav>
           </header>
           <Routes>
-            <Route exact path="/albums">
-              <Albums />
-            </Route>
-            <Route path="/albums/create">
-              <Create />
-            </Route>
-            <Route exact path="/albums/:albumId">
-              <Album />
-            </Route>
-            <Route path="/albums/:albumId/update">
-              <Update />
-            </Route>
-            {allAlbums && allAlbums.length && (
-              <Route path="/review/:albumId">
-                <Albumreview />
-              </Route>
+            {user && (
+              <div>
+                <Route exact path="/albums">
+                  <Albums />
+                </Route>
+                <Route path="/albums/create">
+                  <Create />
+                </Route>
+                <Route exact path="/albums/:albumId">
+                  <Album />
+                </Route>
+                <Route path="/albums/:albumId/update">
+                  <Update />
+                </Route>
+                {allAlbums && allAlbums.length && (
+                  <Route path="/review/:albumId">
+                    <Albumreview />
+                  </Route>
+                )}
+                <Route path="/pics">
+                  <Pics />
+                </Route>
+              </div>
             )}
-            <Route path="/pics">
-              <Pics />
-            </Route>
             <Route path="/login">
               <Login />
             </Route>
