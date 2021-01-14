@@ -132,7 +132,12 @@ const Update = () => {
         <Alert variant="success">
           <h2>Album succesfully updated!</h2>
           <p>
-            The album code for your customer is <strong>{code}</strong>
+            The album code for your customer is{" "}
+            <a href={`https://amazing-photos.herokuapp.com/review/${code}`}>
+              <strong>
+                https://amazing-photos.herokuapp.com/review/{code}
+              </strong>
+            </a>
           </p>
           <p>You´ll be soon redirected to your albums, please wait ...</p>
         </Alert>
