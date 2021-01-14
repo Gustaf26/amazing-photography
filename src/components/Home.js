@@ -1,4 +1,4 @@
-import { Container, Col, Media, Card } from "react-bootstrap";
+import { Container, Col, Card } from "react-bootstrap";
 
 const Home = () => {
   return (

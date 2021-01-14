@@ -10,16 +10,14 @@ import {
   Media,
 } from "react-bootstrap";
 import { db } from "../firebase/index";
-// import { useAuth } from "../context/AuthContext";
 import { useMainContext } from "../context/MainContext";
 import UploadImage from "./UploadImage";
 import "../App.css";
 
 const Create = () => {
   const [loaded, setLoaded] = useState(false);
-  const [falseyPics, setFalsey] = useState(false);
   const [albumName, setAlbumName] = useState("");
-  const { user, allPicsInDb, allAlbums } = useMainContext();
+  const { allPicsInDb } = useMainContext();
   const [file, setFile] = useState(false);
   const [code, setCode] = useState("");
   const navigate = useNavigate();
@@ -40,7 +38,6 @@ const Create = () => {
     e.preventDefault();
     const truthy = allPicsInDb.filter((pic) => pic.selected === true);
     const urls = truthy.map((pic) => pic.url);
-    //const albums = {...allAlbums};
     let ranNum;
     ranNum = Math.floor(Math.random() * 10000000);
     await db

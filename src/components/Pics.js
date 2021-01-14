@@ -37,9 +37,7 @@ const Pics = () => {
   const allPicsFix = useRef([]);
   const navigate = useNavigate();
 
-  const selectPic = (pic, ind) => {
-    // document.getElementById(ind).style.outline = "2px solid green";
-
+  const selectPic = (pic) => {
     allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
         console.log({ ...allPicsFix.current });
@@ -58,8 +56,7 @@ const Pics = () => {
       });
   };
 
-  const deleteSelection = (pic, ind) => {
-    // document.getElementById(ind).style.outline = "2px solid red";
+  const deleteSelection = (pic) => {
     allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
         console.log({ ...allPicsFix.current });
@@ -125,11 +122,11 @@ const Pics = () => {
                     </Media>
                     <div className="d-flex mx-auto my-2">
                       <AddCircleOutlineIcon
-                        onClick={() => selectPic(pic.url, index)}
+                        onClick={() => selectPic(pic.url)}
                         color="primary"
                       />
                       <IndeterminateCheckBoxIcon
-                        onClick={() => deleteSelection(pic.url, index)}
+                        onClick={() => deleteSelection(pic.url)}
                         color="secondary"
                       />
                     </div>

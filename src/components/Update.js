@@ -10,16 +10,14 @@ import {
   Media,
 } from "react-bootstrap";
 import { db } from "../firebase/index";
-// import { useAuth } from "../context/AuthContext";
 import { useMainContext } from "../context/MainContext";
 import UploadImage from "./UploadImage";
 import "../App.css";
 
 const Update = () => {
   const [loaded, setLoaded] = useState(false);
-  const [falseyPics, setFalsey] = useState(false);
   const [albumName, setAlbumName] = useState("");
-  const { user, allPicsInDb, allAlbums, currentAlbum } = useMainContext();
+  const { allPicsInDb, currentAlbum } = useMainContext();
   const [code, setCode] = useState("");
   const [file, setFile] = useState(false);
   const navigate = useNavigate();
@@ -41,7 +39,7 @@ const Update = () => {
 
     const truthy = allPicsInDb.filter((pic) => pic.selected === true);
     const urls = truthy.map((pic) => pic.url);
-    //const albums = {...allAlbums};
+
     if (currentAlbum.title !== albumName) {
       db.collection("albums")
         .doc(`${currentAlbum.title.toLowerCase()}`)

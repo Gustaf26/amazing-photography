@@ -3,7 +3,6 @@ import { db } from "../firebase/index";
 import { SRLWrapper } from "simple-react-lightbox";
 import { useMainContext } from "../context/MainContext";
 import { useNavigate } from "react-router-dom";
-
 import { Container, Row, Card, Media, Button } from "react-bootstrap";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
@@ -37,7 +36,6 @@ const Album = () => {
   const {
     setAllPics,
     resetPicsSelection,
-    setAlbumPics,
     allPicsInDb,
     currentAlbum,
     albumPics,
@@ -125,7 +123,6 @@ const Album = () => {
   useEffect(() => {
     if (albumPics && albumPics.length) {
       resetPicsSelection();
-      //   thisAlbumFix.current.push(...albumPics);
       setAlbumFix([...albumPics]);
 
       setLoaded(true);

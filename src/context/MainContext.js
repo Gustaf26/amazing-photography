@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { Button, Spinner } from "react-bootstrap";
-// import { useParams } from "react-router-dom";
 
 const MainContext = createContext();
 
