@@ -37,7 +37,9 @@ function App() {
                         <Link to="/pics">Pics</Link>
                       </li>
                       <li className="px-3 mt-3">
-                        <p onClick={logout}>Logout</p>
+                        <p onClick={logout}>
+                          <Link to="/">Logout</Link>
+                        </p>
                       </li>
                     </ul>
                   ) : (
@@ -50,35 +52,37 @@ function App() {
             </nav>
           </header>
           <Routes>
+            <Route path="/">
+              <Home />
+            </Route>
             {user && (
-              <div>
-                <Route exact path="/albums">
+              <Route>
+                <Route path="/albums">
                   <Albums />
                 </Route>
                 <Route path="/albums/create">
                   <Create />
                 </Route>
-                <Route exact path="/albums/:albumId">
+                <Route path="/albums/:albumId">
                   <Album />
                 </Route>
                 <Route path="/albums/:albumId/update">
                   <Update />
                 </Route>
-                {allAlbums && allAlbums.length && (
-                  <Route path="/review/:albumId">
-                    <Albumreview />
-                  </Route>
-                )}
+
                 <Route path="/pics">
                   <Pics />
                 </Route>
-              </div>
+              </Route>
+            )}
+
+            {allAlbums && allAlbums.length && (
+              <Route path="/review/:albumId">
+                <Albumreview />
+              </Route>
             )}
             <Route path="/login">
               <Login />
-            </Route>
-            <Route exact path="/">
-              <Home />
             </Route>
           </Routes>
         </div>

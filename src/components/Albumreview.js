@@ -122,6 +122,8 @@ const Albumreview = () => {
         }, 3000);
       })
       .catch(function (error) {
+        setAlert(true);
+        navigate("/");
         console.error("Error writing document: ", error);
       });
   };
@@ -138,7 +140,7 @@ const Albumreview = () => {
     let emptyObj;
 
     emptyObj = [];
-    setAlert(false);
+    setAlert(true);
     allAlbums.map((alb) => {
       if (alb.code === Number(albumId)) {
         emptyObj = { ...alb };
@@ -147,6 +149,7 @@ const Albumreview = () => {
     if (emptyObj) {
       setClientAlbum(emptyObj);
       setLoaded(true);
+      setAlert(false);
     }
   }, []);
 
@@ -168,6 +171,7 @@ const Albumreview = () => {
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {picsLoaded &&
             clientAlbum &&
+            !alert &&
             clientAlbum.photo_urls &&
             clientAlbum.photo_urls.map((photo, index) => {
               return (
