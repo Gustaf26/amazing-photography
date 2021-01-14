@@ -19,9 +19,7 @@ const Albumreview = () => {
   const [picsLoaded, setLoaded] = useState(false);
   const {
     allPicsInDb,
-    currentAlbum,
     allAlbums,
-    albumPics,
     clientAlbum,
     setClientAlbum,
   } = useMainContext();
@@ -31,7 +29,7 @@ const Albumreview = () => {
   const [alert, setAlert] = useState(false);
   const quantity = useRef(0);
 
-  const selectPic = (url, ind) => {
+  const selectPic = (url) => {
     let emptyArr;
     emptyArr = [];
     let fullArr;
@@ -56,7 +54,7 @@ const Albumreview = () => {
     }
   };
 
-  const deleteSelection = (url, ind) => {
+  const deleteSelection = (url) => {
     let emptyArr;
     emptyArr = [];
     let fullArr;
@@ -191,11 +189,11 @@ const Albumreview = () => {
                   </Media>
                   <div className="d-flex mx-auto my-2">
                     <AddCircleOutlineIcon
-                      onClick={() => selectPic(photo, index)}
+                      onClick={() => selectPic(photo)}
                       color="primary"
                     />
                     <IndeterminateCheckBoxIcon
-                      onClick={() => deleteSelection(photo, index)}
+                      onClick={() => deleteSelection(photo)}
                       color="secondary"
                     />
                   </div>
