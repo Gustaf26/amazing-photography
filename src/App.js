@@ -85,6 +85,9 @@ function App() {
               <Login />
             </Route>
           </Routes>
+          <Route path="/register">
+            <Register />
+          </Route>
         </div>
       </Router>
     </SimpleReactLightbox>
