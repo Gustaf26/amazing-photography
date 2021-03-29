@@ -17,7 +17,7 @@ import "../App.css";
 const Create = () => {
   const [loaded, setLoaded] = useState(false);
   const [albumName, setAlbumName] = useState("");
-  const { allPicsInDb, user } = useMainContext();
+  const { allPicsInDb, user, resetPicsSelection } = useMainContext();
   const [file, setFile] = useState(false);
   const [code, setCode] = useState("");
   const navigate = useNavigate();
@@ -57,6 +57,7 @@ const Create = () => {
         setCode(ranNum);
         setTimeout(() => {
           navigate("/albums");
+          resetPicsSelection();
         }, 5000);
       })
       .catch(function (error) {

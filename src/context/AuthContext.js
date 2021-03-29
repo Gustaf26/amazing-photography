@@ -23,6 +23,10 @@ const AuthContextProvider = (props) => {
     return auth.signOut();
   };
 
+  const register = (email, password) => {
+    return auth.createUserWithEmailAndPassword(email, password);
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       // auth state changed (by a user either logging in or out)
@@ -39,6 +43,7 @@ const AuthContextProvider = (props) => {
     loading,
     login,
     logout,
+    register,
   };
 
   return (
