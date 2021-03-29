@@ -36,33 +36,41 @@ const Create = () => {
 
   const createAlbum = async (e) => {
     e.preventDefault();
-    const truthy = allPicsInDb.filter((pic) => pic.selected === true);
-    const urls = truthy.map((pic) => pic.url);
-    let ranNum;
-    ranNum = Math.floor(Math.random() * 10000000);
-    await db
-      .collection("albums")
-      .doc(`${albumName.toLowerCase()}`)
-      .set({
-        title: albumName.toLowerCase(),
-        cust_approved: false,
-        url: Math.floor(Math.random() * 200).toString(),
-        photo_urls: [...urls],
-        code: ranNum,
-        user: user.email,
-      })
-      .then(function () {
-        console.log("Document successfully written!");
-        setLoaded(false);
-        setCode(ranNum);
-        setTimeout(() => {
-          navigate("/albums");
-          resetPicsSelection();
-        }, 5000);
-      })
-      .catch(function (error) {
-        console.error("Error writing document: ", error);
-      });
+
+    const selected = allPicsInDb.filter((pic) => pic.selected === true);
+
+    if (!selected.length) {
+      alert("You need to upload or select at least 1 pic");
+      return;
+    } else {
+      const truthy = allPicsInDb.filter((pic) => pic.selected === true);
+      const urls = truthy.map((pic) => pic.url);
+      let ranNum;
+      ranNum = Math.floor(Math.random() * 10000000);
+      await db
+        .collection("albums")
+        .doc(`${albumName.toLowerCase()}`)
+        .set({
+          title: albumName.toLowerCase(),
+          cust_approved: false,
+          url: Math.floor(Math.random() * 200).toString(),
+          photo_urls: [...urls],
+          code: ranNum,
+          user: user.email,
+        })
+        .then(function () {
+          console.log("Document successfully written!");
+          setLoaded(false);
+          setCode(ranNum);
+          setTimeout(() => {
+            navigate("/albums");
+            resetPicsSelection();
+          }, 5000);
+        })
+        .catch(function (error) {
+          console.error("Error writing document: ", error);
+        });
+    }
   };
 
   useEffect(() => {
