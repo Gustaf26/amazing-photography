@@ -6,7 +6,7 @@ import { Container, Row, Card, Media } from "react-bootstrap";
 
 const Albums = () => {
   const [albumsLoaded, setLoaded] = useState(false);
-  const { allAlbums, setCurrentAlbum } = useMainContext();
+  const { allAlbums, setCurrentAlbum, user } = useMainContext();
   const allAlbumsFix = useRef([]);
   const navigate = useNavigate();
 
@@ -32,31 +32,33 @@ const Albums = () => {
           {albumsLoaded &&
             allAlbumsFix.current &&
             allAlbumsFix.current.map((alb, index) => {
-              return (
-                <Card className="ml-3 mb-3" id="media" key={index}>
-                  <Card.Text className="mt-2">Album:</Card.Text>
-                  <h2>{alb.title.toUpperCase()}</h2>
-                  <Media
-                    key={alb.title}
-                    className="my-auto photo"
-                    onClick={() => goToAlbum(alb)}
-                  >
-                    <img
-                      width="100%"
-                      height="auto"
-                      src={
-                        alb.photo_urls[0].url
-                          ? alb.photo_urls[0].url
-                          : alb.photo_urls[0]
-                      }
-                      alt="Generic placeholder"
-                    />
-                    {alb.cust_approved === true && (
-                      <p className="custumer_approved"> Customer approved</p>
-                    )}
-                  </Media>
-                </Card>
-              );
+              if (alb.user === user.email) {
+                return (
+                  <Card className="ml-3 mb-3" id="media" key={index}>
+                    <Card.Text className="mt-2">Album:</Card.Text>
+                    <h2>{alb.title.toUpperCase()}</h2>
+                    <Media
+                      key={alb.title}
+                      className="my-auto photo"
+                      onClick={() => goToAlbum(alb)}
+                    >
+                      <img
+                        width="100%"
+                        height="auto"
+                        src={
+                          alb.photo_urls[0].url
+                            ? alb.photo_urls[0].url
+                            : alb.photo_urls[0]
+                        }
+                        alt="Generic placeholder"
+                      />
+                      {alb.cust_approved === true && (
+                        <p className="custumer_approved"> Customer approved</p>
+                      )}
+                    </Media>
+                  </Card>
+                );
+              }
             })}
         </Row>
       </Container>

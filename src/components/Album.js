@@ -39,6 +39,7 @@ const Album = () => {
     allPicsInDb,
     currentAlbum,
     albumPics,
+    user,
   } = useMainContext();
   const allPicsFix = useRef([]);
   const [thisAlbumFix, setAlbumFix] = useState([]);
@@ -145,36 +146,38 @@ const Album = () => {
             {picsLoaded &&
               thisAlbumFix.length &&
               thisAlbumFix.map((pic, index) => {
-                return (
-                  <Card
-                    className={
-                      pic.selected
-                        ? "pic-selected ml-3 mb-3"
-                        : "not-selected ml-3 mb-3"
-                    }
-                    id="media"
-                    key={index}
-                  >
-                    <Media key={pic.id} className="pic my-auto">
-                      <img
-                        width="100%"
-                        height="auto"
-                        src={pic.url}
-                        alt="Generic placeholder"
-                      />
-                    </Media>
-                    <div className="d-flex mx-auto my-2">
-                      <AddCircleOutlineIcon
-                        onClick={() => selectPic(pic.url, index)}
-                        color="primary"
-                      />
-                      <IndeterminateCheckBoxIcon
-                        onClick={() => deleteSelection(pic.url, index)}
-                        color="secondary"
-                      />
-                    </div>
-                  </Card>
-                );
+                if (pic.user === user.email) {
+                  return (
+                    <Card
+                      className={
+                        pic.selected
+                          ? "pic-selected ml-3 mb-3"
+                          : "not-selected ml-3 mb-3"
+                      }
+                      id="media"
+                      key={index}
+                    >
+                      <Media key={pic.id} className="pic my-auto">
+                        <img
+                          width="100%"
+                          height="auto"
+                          src={pic.url}
+                          alt="Generic placeholder"
+                        />
+                      </Media>
+                      <div className="d-flex mx-auto my-2">
+                        <AddCircleOutlineIcon
+                          onClick={() => selectPic(pic.url, index)}
+                          color="primary"
+                        />
+                        <IndeterminateCheckBoxIcon
+                          onClick={() => deleteSelection(pic.url, index)}
+                          color="secondary"
+                        />
+                      </div>
+                    </Card>
+                  );
+                }
               })}
           </Row>
         </SRLWrapper>

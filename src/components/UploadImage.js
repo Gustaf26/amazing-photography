@@ -11,7 +11,7 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [file, setFile] = useState();
   const imageUrl = useRef([]);
-  const { setAllPics, allPicsInDb } = useMainContext();
+  const { setAllPics, allPicsInDb, user } = useMainContext();
 
   useEffect(() => {
     setErrorMsg(true);
@@ -73,6 +73,7 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
                 url: imageUrl.current,
                 albums: [`${albumName.toLowerCase()}`],
                 selected: true,
+                user: user.email,
               },
             })
             .then(function () {

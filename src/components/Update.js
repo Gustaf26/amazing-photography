@@ -17,7 +17,7 @@ import "../App.css";
 const Update = () => {
   const [loaded, setLoaded] = useState(false);
   const [albumName, setAlbumName] = useState("");
-  const { allPicsInDb, currentAlbum } = useMainContext();
+  const { allPicsInDb, currentAlbum, user } = useMainContext();
   const [code, setCode] = useState("");
   const [file, setFile] = useState(false);
   const navigate = useNavigate();
@@ -56,6 +56,7 @@ const Update = () => {
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
         code: ranNum,
+        user: user.email,
       })
       .then(function () {
         console.log("Document successfully written!");

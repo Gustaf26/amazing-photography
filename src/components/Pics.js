@@ -33,7 +33,12 @@ const options = {
 
 const Pics = () => {
   const [picsLoaded, setLoaded] = useState(false);
-  const { setAllPics, allPicsInDb, resetPicsSelection } = useMainContext();
+  const {
+    setAllPics,
+    allPicsInDb,
+    resetPicsSelection,
+    user,
+  } = useMainContext();
   const allPicsFix = useRef([]);
   const navigate = useNavigate();
 
@@ -102,36 +107,38 @@ const Pics = () => {
             {picsLoaded &&
               allPicsFix.current &&
               allPicsFix.current.map((pic, index) => {
-                return (
-                  <Card
-                    className={
-                      pic.selected
-                        ? "pic-selected ml-3 mb-3"
-                        : "not-selected ml-3 mb-3"
-                    }
-                    id="media"
-                    key={index}
-                  >
-                    <Media key={pic.id} className="pic my-auto">
-                      <img
-                        width="100%"
-                        height="auto"
-                        src={pic.url}
-                        alt="Generic placeholder"
-                      />
-                    </Media>
-                    <div className="d-flex mx-auto my-2">
-                      <AddCircleOutlineIcon
-                        onClick={() => selectPic(pic.url)}
-                        color="primary"
-                      />
-                      <IndeterminateCheckBoxIcon
-                        onClick={() => deleteSelection(pic.url)}
-                        color="secondary"
-                      />
-                    </div>
-                  </Card>
-                );
+                if (pic.user === user.email) {
+                  return (
+                    <Card
+                      className={
+                        pic.selected
+                          ? "pic-selected ml-3 mb-3"
+                          : "not-selected ml-3 mb-3"
+                      }
+                      id="media"
+                      key={index}
+                    >
+                      <Media key={pic.id} className="pic my-auto">
+                        <img
+                          width="100%"
+                          height="auto"
+                          src={pic.url}
+                          alt="Generic placeholder"
+                        />
+                      </Media>
+                      <div className="d-flex mx-auto my-2">
+                        <AddCircleOutlineIcon
+                          onClick={() => selectPic(pic.url)}
+                          color="primary"
+                        />
+                        <IndeterminateCheckBoxIcon
+                          onClick={() => deleteSelection(pic.url)}
+                          color="secondary"
+                        />
+                      </div>
+                    </Card>
+                  );
+                }
               })}
           </Row>
         </SRLWrapper>

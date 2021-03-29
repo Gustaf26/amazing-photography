@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import SimpleReactLightbox from "simple-react-lightbox";
 import Login from "./components/Login.js";
+import Register from "./components/Register.js";
 import Home from "./components/Home.js";
 import Pics from "./components/Pics.js";
 import Albums from "./components/Albums.js";
@@ -43,8 +44,13 @@ function App() {
                       </li>
                     </ul>
                   ) : (
-                    <li className="px-3 my-2">
-                      <Link to="/login">Login</Link>
+                    <li>
+                      <span className="px-3 my-2">
+                        <Link to="/login">Login</Link>
+                      </span>
+                      <span className="px-3 my-2">
+                        <Link to="/register">Register</Link>
+                      </span>
                     </li>
                   )}
                 </ul>
@@ -84,10 +90,10 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
           </Routes>
-          <Route path="/register">
-            <Register />
-          </Route>
         </div>
       </Router>
     </SimpleReactLightbox>

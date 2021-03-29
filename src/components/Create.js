@@ -17,7 +17,7 @@ import "../App.css";
 const Create = () => {
   const [loaded, setLoaded] = useState(false);
   const [albumName, setAlbumName] = useState("");
-  const { allPicsInDb } = useMainContext();
+  const { allPicsInDb, user } = useMainContext();
   const [file, setFile] = useState(false);
   const [code, setCode] = useState("");
   const navigate = useNavigate();
@@ -49,6 +49,7 @@ const Create = () => {
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
         code: ranNum,
+        user: user.email,
       })
       .then(function () {
         console.log("Document successfully written!");
@@ -89,7 +90,7 @@ const Create = () => {
                 <Col lg={12} md={10} className="d-flex">
                   {allPicsInDb &&
                     allPicsInDb.map((pic, index) => {
-                      if (pic.selected === true) {
+                      if (pic.selected === true && pic.user === user.email) {
                         return (
                           <Card className="ml-3" id="media" key={index}>
                             <Media key={pic.id} className="my-auto">
