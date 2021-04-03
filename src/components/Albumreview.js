@@ -27,6 +27,7 @@ const Albumreview = () => {
   const navigate = useNavigate();
   const { albumId } = useParams();
   const [alert, setAlert] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
   const quantity = useRef(0);
 
   const selectPic = (url) => {
@@ -110,6 +111,7 @@ const Albumreview = () => {
         cust_approved: true,
         photo_urls: [...emptyArr],
         code: ranNum,
+        user: userEmail,
       })
       .then(function () {
         console.log("Document successfully written!");
@@ -138,14 +140,17 @@ const Albumreview = () => {
     let emptyObj;
 
     emptyObj = [];
+    emptyUSer = "";
     setAlert(true);
     allAlbums.map((alb) => {
       if (alb.code === Number(albumId)) {
         emptyObj = { ...alb };
+        emptyUser = alb.user;
       }
     });
-    if (emptyObj) {
+    if (emptyObj && emptyUser) {
       setClientAlbum(emptyObj);
+      setUserEmail(emptyUser);
       setLoaded(true);
       setAlert(false);
     }
