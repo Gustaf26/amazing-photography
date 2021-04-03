@@ -138,9 +138,9 @@ const Albumreview = () => {
 
   useEffect(() => {
     let emptyObj;
-
+    let emptyUser;
     emptyObj = [];
-    emptyUSer = "";
+    emptyUser = "";
     setAlert(true);
     allAlbums.map((alb) => {
       if (alb.code === Number(albumId)) {

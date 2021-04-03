@@ -148,9 +148,7 @@ const Update = () => {
           <p>
             The album code for your customer is{" "}
             <a href={`photography.catala-sverdrup.se/review/${code}`}>
-              <strong>
-                https://amazing-photos.herokuapp.com/review/{code}
-              </strong>
+              <strong>photography.catala-sverdrup.se/review/{code}</strong>
             </a>
           </p>
           <p>You´ll be soon redirected to your albums, please wait ...</p>
