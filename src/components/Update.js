@@ -146,10 +146,10 @@ const Update = () => {
         <Alert variant="success">
           <h2>Album succesfully updated!</h2>
           <p>
-            The album code for your customer is{" "}
-            <a href={`photography.catala-sverdrup.se/review/${code}`}>
+            The album code for your customer is (copy this link){" "}
+            <p>
               <strong>photography.catala-sverdrup.se/review/{code}</strong>
-            </a>
+            </p>
           </p>
           <p>You´ll be soon redirected to your albums, please wait ...</p>
         </Alert>
