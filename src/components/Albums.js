@@ -6,13 +6,19 @@ import { Container, Row, Card, Media } from "react-bootstrap";
 
 const Albums = () => {
   const [albumsLoaded, setLoaded] = useState(false);
-  const { allAlbums, setCurrentAlbum, user } = useMainContext();
+  const {
+    allAlbums,
+    setCurrentAlbum,
+    user,
+    resetPicsSelection,
+  } = useMainContext();
   const allAlbumsFix = useRef([]);
   const navigate = useNavigate();
 
   const goToAlbum = (alb) => {
     setCurrentAlbum(alb);
     setTimeout(() => {
+      resetPicsSelection();
       navigate(`/albums/${alb.code}`);
     }, 1000);
   };
@@ -20,7 +26,8 @@ const Albums = () => {
   useEffect(() => {
     if (allAlbums && allAlbums.length) {
       allAlbumsFix.current = [...allAlbums];
-
+      setCurrentAlbum("");
+      resetPicsSelection();
       setLoaded(true);
     }
   }, [allAlbums]);

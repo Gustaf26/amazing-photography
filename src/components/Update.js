@@ -74,8 +74,8 @@ const Update = () => {
           setLoaded(false);
           setCode(ranNum);
           setTimeout(() => {
-            navigate("/albums");
             resetPicsSelection();
+            navigate("/albums");
           }, 5000);
         })
         .catch(function (error) {
