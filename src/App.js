@@ -61,7 +61,7 @@ function App() {
             <Route path="/">
               <Home />
             </Route>
-            {user && (
+            {user ? (
               <Route>
                 <Route path="/albums">
                   <Albums />
@@ -75,9 +75,17 @@ function App() {
                 <Route path="/albums/:albumId/update">
                   <Update />
                 </Route>
-
                 <Route path="/pics">
                   <Pics />
+                </Route>
+              </Route>
+            ) : (
+              <Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/register">
+                  <Register />
                 </Route>
               </Route>
             )}
@@ -87,12 +95,6 @@ function App() {
                 <Albumreview />
               </Route>
             )}
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
           </Routes>
         </div>
       </Router>
