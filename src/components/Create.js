@@ -133,7 +133,9 @@ const Create = () => {
           <p>
             The album code for your customer is (copy this link){" "}
             <p>
-              <strong>photography.catala-sverdrup.se/review/{code}</strong>
+              <a href={`/review/${code}`}>
+                <strong>photography.catala-sverdrup.se/review/{code}</strong>
+              </a>
             </p>
           </p>
           <p>You´ll be soon redirected to your albums, please wait ...</p>
