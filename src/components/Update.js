@@ -51,11 +51,6 @@ const Update = () => {
       const truthy = allPicsInDb.filter((pic) => pic.selected === true);
       const urls = truthy.map((pic) => pic.url);
 
-      if (currentAlbum.title !== albumName) {
-        db.collection("albums")
-          .doc(`${currentAlbum.title.toLowerCase()}`)
-          .delete();
-      }
       let ranNum;
       ranNum = Math.floor(Math.random() * 10000000);
       await db
