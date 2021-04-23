@@ -66,6 +66,7 @@ const Album = () => {
   return (
     <>
       <Container>
+        <h2 className="my-4">{currentAlbum.title.toUpperCase()}</h2>
         <SRLWrapper options={options}>
           <Row lg={9} className="d-flex mt-5 mx-auto">
             {picsLoaded &&
@@ -82,16 +83,6 @@ const Album = () => {
                           alt="Generic placeholder"
                         />
                       </Media>
-                      {/* <div className="d-flex mx-auto my-2">
-                        <AddCircleOutlineIcon
-                          // onClick={() => selectPic(pic.url, index)}
-                          color="primary"
-                        />
-                        <IndeterminateCheckBoxIcon
-                          onClick={() => deleteSelection(pic.url, index)}
-                          color="secondary"
-                        />
-                      </div> */}
                     </Card>
                   );
                 }

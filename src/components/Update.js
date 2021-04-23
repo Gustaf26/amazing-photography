@@ -27,9 +27,9 @@ const Update = () => {
   const [file, setFile] = useState(false);
   const navigate = useNavigate();
 
-  const setName = (e) => {
-    setAlbumName(e.target.value);
-  };
+  // const setName = (e) => {
+  //   setAlbumName(e.target.value);
+  // };
 
   const confirmFile = (message) => {
     if (message === true) {
@@ -90,6 +90,10 @@ const Update = () => {
     }
   }, [allPicsInDb]);
 
+  useEffect(() => {
+    setAlbumName(currentAlbum.title);
+  }, [currentAlbum]);
+
   return (
     <>
       {loaded && allPicsInDb && (
@@ -98,19 +102,8 @@ const Update = () => {
             <Form className="mx-auto form px-5 py-5" onSubmit={updateAlbum}>
               <Form.Group>
                 <Form.Label>
-                  <h2>UPDATE YOUR ALBUM</h2>
+                  <h2>UPDATE YOUR ALBUM: {albumName.toUpperCase()}</h2>
                 </Form.Label>
-                <Form.Control
-                  className="my-3"
-                  type="text"
-                  placeholder={
-                    currentAlbum
-                      ? currentAlbum.title.toUpperCase()
-                      : "Set an album name"
-                  }
-                  onChange={setName}
-                  required
-                />
                 <Col lg={12} md={10} className="d-flex">
                   {allPicsInDb &&
                     allPicsInDb.map((pic, index) => {
@@ -137,7 +130,7 @@ const Update = () => {
               </Form.Group>
             </Form>
             {!file && (
-              <Alert variant="warning">You haven´t chosen any pics</Alert>
+              <Alert variant="warning">You haven´t uploaded any pics</Alert>
             )}
           </Col>
         </Container>
