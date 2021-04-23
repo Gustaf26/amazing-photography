@@ -144,7 +144,7 @@ const Pics = () => {
         </SRLWrapper>
       </Container>
       <Button onClick={createAlbum} className="my-3" variant="primary">
-        Create Album
+        Create From Selection
       </Button>
     </>
   );

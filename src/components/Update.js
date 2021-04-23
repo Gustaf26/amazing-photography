@@ -71,7 +71,7 @@ const Update = () => {
           setTimeout(() => {
             resetPicsSelection();
             navigate("/albums");
-          }, 5000);
+          }, 9000);
         })
         .catch(function (error) {
           console.error("Error writing document: ", error);
