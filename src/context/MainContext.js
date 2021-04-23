@@ -64,7 +64,7 @@ const MainContextProvider = (props) => {
         allPicsInDb.map((pic) => {
           picsInAlbum.map((albumPic) => {
             if (albumPic === pic.url) {
-              pic.selected = false;
+              pic.selected = true;
               emptyArr.push(pic);
             }
           });

@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { db } from "../firebase/index";
 import { useMainContext } from "../context/MainContext";
 import { useNavigate } from "react-router-dom";
 
@@ -11,14 +12,35 @@ const Albums = () => {
     setCurrentAlbum,
     user,
     resetPicsSelection,
+    allPicsInDb,
   } = useMainContext();
   const allAlbumsFix = useRef([]);
   const navigate = useNavigate();
 
+  const selectPicsFromAlb = (alb) => {
+    alb.photo_urls.map((url) =>
+      allPicsInDb.map((pic) => {
+        if (pic.url == url) {
+          pic.selected = true;
+        }
+      })
+    );
+
+    db.collection("pics")
+      .doc("all-pics")
+      .set({ ...allPicsInDb })
+      .then(function () {
+        console.log("Document successfully written!");
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+  };
+
   const goToAlbum = (alb) => {
     setCurrentAlbum(alb);
+    selectPicsFromAlb(alb);
     setTimeout(() => {
-      resetPicsSelection();
       navigate(`/albums/${alb.code}`);
     }, 1000);
   };
