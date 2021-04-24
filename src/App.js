@@ -8,6 +8,7 @@ import Albums from "./components/Albums.js";
 import Album from "./components/Album";
 import Create from "./components/Create.js";
 import Update from "./components/Update";
+import EditTitle from "./components/EditTitle";
 import Albumreview from "./components/Albumreview";
 import { useAuth } from "./context/AuthContext";
 import { useMainContext } from "./context/MainContext";
@@ -74,6 +75,9 @@ function App() {
                 </Route>
                 <Route path="/albums/:albumId/update">
                   <Update />
+                </Route>
+                <Route path="/albums/:albumId/edit-title">
+                  <EditTitle />
                 </Route>
                 <Route path="/pics">
                   <Pics />

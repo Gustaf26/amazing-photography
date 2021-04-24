@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { SRLWrapper } from "simple-react-lightbox";
 import { useMainContext } from "../context/MainContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Container, Row, Card, Media, Button } from "react-bootstrap";
 
 const options = {
@@ -66,6 +66,9 @@ const Album = () => {
     <>
       <Container>
         <h2 className="my-4">{currentAlbum.title.toUpperCase()}</h2>
+        <Link to={`/albums/${currentAlbum.code}/edit-title`}>
+          <p>Edit title</p>
+        </Link>
         <SRLWrapper options={options}>
           <Row lg={9} className="d-flex mt-5 mx-auto">
             {picsLoaded &&
