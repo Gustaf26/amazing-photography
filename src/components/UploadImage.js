@@ -45,8 +45,6 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
       snapshot.ref.getDownloadURL().then((url) => {
         // add uploaded file to db
         if (url) {
-          // imageUrl.current = url;
-
           let allPics = { ...allPicsInDb };
           let ranNum = Math.floor(Math.random() * 1000);
 
@@ -86,9 +84,6 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
       reader.onabort = () => console.log("file reading was aborted");
       reader.onerror = () => console.log("file reading has failed");
       reader.onload = () => {
-        // Do whatever you want with the file contents
-        // const binaryStr = reader.result;
-        // console.log(binaryStr);
         setFile(file);
       };
       reader.readAsArrayBuffer(file);

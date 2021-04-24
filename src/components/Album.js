@@ -32,7 +32,6 @@ const Album = () => {
   const [picsLoaded, setLoaded] = useState(false);
   const {
     setAllPics,
-    // resetPicsSelection,
     allPicsInDb,
     currentAlbum,
     albumPics,
