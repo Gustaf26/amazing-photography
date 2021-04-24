@@ -80,20 +80,7 @@ const Albumreview = () => {
     }
   };
 
-  const confirmAlbum = async (e) => {
-    e.preventDefault();
-    setLoaded(false);
-
-    if (quantity.current === 0) {
-      alert("You need to choose at least 1 picture");
-      return;
-    }
-
-    await db
-      .collection("albums")
-      .doc(`${clientAlbum.title.toLowerCase()}`)
-      .delete();
-
+  const updateAlbum = async (id) => {
     let ranNum;
     ranNum = Math.floor(Math.random() * 10000000);
 
@@ -105,7 +92,7 @@ const Albumreview = () => {
 
     await db
       .collection("albums")
-      .doc(`${clientAlbum.title.toLowerCase()}`)
+      .doc(id)
       .set({
         title: clientAlbum.title.toLowerCase(),
         cust_approved: true,
@@ -119,7 +106,7 @@ const Albumreview = () => {
         setAlert(true);
         setTimeout(() => {
           navigate("/");
-        }, 3000);
+        }, 2000);
       })
       .catch(function (error) {
         setAlert(true);
@@ -127,6 +114,44 @@ const Albumreview = () => {
         console.error("Error writing document: ", error);
       });
   };
+
+  const confirmAlbum = async (e) => {
+    e.preventDefault();
+    setLoaded(false);
+
+    if (quantity.current === 0) {
+      alert("You need to choose at least 1 picture");
+      return;
+    }
+
+    let albumsWithTitle = [];
+    let albumToUpdate;
+    db.collection("albums")
+      .where("title", "==", clientAlbum.title.toLowerCase())
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          albumsWithTitle.push({ id: doc.id, data: doc.data() });
+          if (albumsWithTitle.length) {
+            albumToUpdate = albumsWithTitle.filter(
+              (alb) => alb.data.user === userEmail
+            );
+          }
+        });
+        setTimeout(() => {
+          updateAlbum(albumToUpdate[0].id);
+        }, 2000);
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  };
+
+  // await db
+  //   .collection("albums")
+  //   .doc(`${clientAlbum.title.toLowerCase()}`)
+  //   .delete();
 
   useEffect(() => {
     if (allPicsInDb && allPicsInDb.length) {
