@@ -28,6 +28,7 @@ const Albumreview = () => {
   const { albumId } = useParams();
   const [alert, setAlert] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const [loadingToDb, setLoadingtoDb] = useState("");
   const quantity = useRef(0);
 
   const selectPic = (url) => {
@@ -104,6 +105,7 @@ const Albumreview = () => {
         console.log("Document successfully written!");
         setLoaded(false);
         setAlert(true);
+        setLoadingtoDb(false);
         setTimeout(() => {
           navigate("/");
         }, 2000);
@@ -118,7 +120,7 @@ const Albumreview = () => {
   const confirmAlbum = async (e) => {
     e.preventDefault();
     setLoaded(false);
-
+    setLoadingtoDb(true);
     if (quantity.current === 0) {
       alert("You need to choose at least 1 picture");
       return;
@@ -139,19 +141,12 @@ const Albumreview = () => {
             );
           }
         });
-        setTimeout(() => {
-          updateAlbum(albumToUpdate[0].id);
-        }, 2000);
       })
+      .then(() => updateAlbum(albumToUpdate[0].id))
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
   };
-
-  // await db
-  //   .collection("albums")
-  //   .doc(`${clientAlbum.title.toLowerCase()}`)
-  //   .delete();
 
   useEffect(() => {
     if (allPicsInDb && allPicsInDb.length) {
@@ -232,7 +227,7 @@ const Albumreview = () => {
             })}
         </Row>
       </Container>
-      {!alert && clientAlbum && clientAlbum.photo_urls && (
+      {!alert && !loadingToDb && clientAlbum && clientAlbum.photo_urls && (
         <Button onClick={confirmAlbum} className="my-3" variant="primary">
           Confirm and send
         </Button>
