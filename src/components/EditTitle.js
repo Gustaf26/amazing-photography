@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Form, Button, Container } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+import { Form, Button, Container, Alert } from "react-bootstrap";
 import { db } from "../firebase/index";
 import { useMainContext } from "../context/MainContext";
 import "../App.css";
@@ -66,29 +66,41 @@ const EditTitle = () => {
 
   return (
     <div>
-      <Container>
-        <h2 className="my-4">
-          Update your album: {currentAlbum.title.toUpperCase()}
-        </h2>
-        <Form
-          className="mx-auto form px-5 py-5"
-          onSubmit={(e) => checkAlbum(e)}
-        >
-          <Form.Group>
-            <Form.Label>Enter your new title</Form.Label>
-            <Form.Control
-              id="album-title"
-              type="text"
-              placeholder={currentAlbum.title}
-              className="my-5 w-50 mx-auto"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <Button className="mt-0" variant="primary" type="submit">
-              Update title
-            </Button>
-          </Form.Group>
-        </Form>
-      </Container>
+      {currentAlbum && (
+        <Container>
+          <h2 className="my-4">
+            Update your album: {currentAlbum.title.toUpperCase()}
+          </h2>
+          <Form
+            className="mx-auto form px-5 py-5"
+            onSubmit={(e) => checkAlbum(e)}
+          >
+            <Form.Group>
+              <Form.Label>Enter your new title</Form.Label>
+              <Form.Control
+                id="album-title"
+                type="text"
+                placeholder={currentAlbum.title}
+                className="my-5 w-50 mx-auto"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <Button className="mt-0" variant="primary" type="submit">
+                Update title
+              </Button>
+            </Form.Group>
+          </Form>
+        </Container>
+      )}
+      {!currentAlbum && (
+        <div>
+          <Alert variant="warning">
+            Oops, something went wrong. Please go back to albums
+          </Alert>
+          <Link to="/albums">
+            <p>Go back to albums</p>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
