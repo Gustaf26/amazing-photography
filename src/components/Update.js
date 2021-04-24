@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Form,
   Button,
@@ -114,7 +114,7 @@ const Update = () => {
 
   return (
     <>
-      {loaded && allPicsInDb && (
+      {albumName && loaded && allPicsInDb && (
         <Container>
           <Col lg={10} className="my-5 pt-5 mx-auto">
             <Form className="mx-auto form px-5 py-5" onSubmit={checkAlbum}>
@@ -152,6 +152,16 @@ const Update = () => {
             )}
           </Col>
         </Container>
+      )}
+      {!albumName && (
+        <div>
+          <Alert variant="warning">
+            Oops, something went wrong. Please go back to albums
+          </Alert>
+          <Link to="/albums">
+            <p>Go back to albums</p>
+          </Link>
+        </div>
       )}
       {code && (
         <Alert variant="success">
