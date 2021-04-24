@@ -27,10 +27,6 @@ const Update = () => {
   const [file, setFile] = useState(false);
   const navigate = useNavigate();
 
-  // const setName = (e) => {
-  //   setAlbumName(e.target.value);
-  // };
-
   const confirmFile = (message) => {
     if (message === true) {
       setFile(false);

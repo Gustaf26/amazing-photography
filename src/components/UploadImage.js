@@ -1,12 +1,9 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { db, storage } from "../firebase/index";
 import { useDropzone } from "react-dropzone";
-import Alert from "react-bootstrap";
 import { useMainContext } from "../context/MainContext";
-import { FileCopySharp } from "@material-ui/icons";
 
 const UploadImage = ({ albumName, setErrorMsg }) => {
-  const [uploadedImage, setUploadedImage] = useState(null);
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [file, setFile] = useState("");
@@ -19,13 +16,13 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
   useEffect(() => {
     if (!file) {
       setErrorMsg(true);
-      setUploadedImage(null);
       setError(true);
       setIsSuccess(false);
 
       return;
     }
 
+    //This is basically cause' we need a title for uploading a pic with album name - reference in all-pics collection
     if (!albumName) {
       alert("You need to set first an album name");
       return;
@@ -36,17 +33,17 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
     setErrorMsg(false);
     setIsSuccess(false);
 
-    // // get file reference
+    // get file reference
     const fileRef = storage.ref(`allPics/${file.name}`);
 
-    // // upload file to fileRef
+    // upload file to fileRef
     const uploadTask = fileRef.put(file);
 
-    // // are we there yet?
+    // are we there yet?
     uploadTask.then((snapshot) => {
-      //   // retrieve URL to uploaded file
+      // retrieve URL to uploaded file
       snapshot.ref.getDownloadURL().then((url) => {
-        //     // add uploaded file to db
+        // add uploaded file to db
         if (url) {
           // imageUrl.current = url;
 
@@ -77,6 +74,7 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
   }, [file]);
 
   const onDrop = useCallback((acceptedFiles) => {
+    //Allow only uploding 1 pic at a time
     if (acceptedFiles.length > 1) {
       alert("Upload only one doc at a time, thanks");
       return;
