@@ -1,25 +1,67 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-import {
-  Form,
-  Button,
-  Container,
-  //   Card,
-  //   Media,
-} from "react-bootstrap";
-// import { db } from "../firebase/index";
+import { useNavigate } from "react-router-dom";
+import { Form, Button, Container } from "react-bootstrap";
+import { db } from "../firebase/index";
 import { useMainContext } from "../context/MainContext";
 import "../App.css";
 
 const EditTitle = () => {
   const { currentAlbum, user } = useMainContext();
   const [title, setTitle] = useState("");
-  //   const [code, setCode] = useState("");
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const updateAlbum = (e) => {
+  //Function to update the album
+  const updateAlbum = async (id) => {
+    currentAlbum.title = title.toLowerCase();
+
+    let ranNum;
+    ranNum = Math.floor(Math.random() * 10000000);
+    await db
+      .collection("albums")
+      .doc(id)
+      .set({
+        title: title.toLowerCase(),
+        cust_apppproved: false,
+        url: Math.floor(Math.random() * 200).toString(),
+        photo_urls: [...currentAlbum.photo_urls],
+        code: ranNum,
+        user: user.email,
+      })
+      .then(() => {
+        setTimeout(() => {
+          navigate(`/albums/${currentAlbum.code}`);
+        }, 1500);
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+  };
+
+  const checkAlbum = (e) => {
     e.preventDefault();
-    alert(title);
+
+    let albumsWithTitle = [];
+    let albumToUpdate;
+    db.collection("albums")
+      .where("title", "==", currentAlbum.title.toLowerCase())
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          albumsWithTitle.push({ id: doc.id, data: doc.data() });
+          if (albumsWithTitle.length) {
+            albumToUpdate = albumsWithTitle.filter(
+              (alb) => alb.data.user === user.email
+            );
+          }
+        });
+        setTimeout(() => {
+          updateAlbum(albumToUpdate[0].id);
+        }, 2000);
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
   };
 
   return (
@@ -28,7 +70,10 @@ const EditTitle = () => {
         <h2 className="my-4">
           Update your album: {currentAlbum.title.toUpperCase()}
         </h2>
-        <Form className="mx-auto form px-5 py-5" onSubmit={updateAlbum}>
+        <Form
+          className="mx-auto form px-5 py-5"
+          onSubmit={(e) => checkAlbum(e)}
+        >
           <Form.Group>
             <Form.Label>Enter your new title</Form.Label>
             <Form.Control
