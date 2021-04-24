@@ -49,7 +49,7 @@ const Create = () => {
       ranNum = Math.floor(Math.random() * 10000000);
       await db
         .collection("albums")
-        .doc(`${albumName.toLowerCase()}`)
+        .doc()
         .set({
           title: albumName.toLowerCase(),
           cust_approved: false,

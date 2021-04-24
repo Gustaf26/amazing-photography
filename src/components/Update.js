@@ -35,7 +35,40 @@ const Update = () => {
     }
   };
 
-  const updateAlbum = async (e) => {
+  //Function to update the album
+  const updateAlbum = async (id) => {
+    const truthy = allPicsInDb.filter((pic) => pic.selected === true);
+    const urls = truthy.map((pic) => pic.url);
+
+    let ranNum;
+    ranNum = Math.floor(Math.random() * 10000000);
+    await db
+      .collection("albums")
+      .doc(id)
+      .set({
+        title: albumName.toLowerCase(),
+        cust_apppproved: false,
+        url: Math.floor(Math.random() * 200).toString(),
+        photo_urls: [...urls],
+        code: ranNum,
+        user: user.email,
+      })
+      .then(function () {
+        console.log("Document successfully written!");
+        setLoaded(false);
+        setCode(ranNum);
+        setTimeout(() => {
+          resetPicsSelection();
+          navigate("/albums");
+        }, 9000);
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+  };
+
+  //Function to get the album with same title and same user as user
+  const checkAlbum = async (e) => {
     e.preventDefault();
 
     const selected = allPicsInDb.filter((pic) => pic.selected === true);
@@ -44,33 +77,27 @@ const Update = () => {
       alert("You need to upload or select at least 1 pic");
       return;
     } else {
-      const truthy = allPicsInDb.filter((pic) => pic.selected === true);
-      const urls = truthy.map((pic) => pic.url);
-
-      let ranNum;
-      ranNum = Math.floor(Math.random() * 10000000);
-      await db
-        .collection("albums")
-        .doc(`${albumName.toLowerCase()}`)
-        .set({
-          title: albumName.toLowerCase(),
-          cust_apppproved: false,
-          url: Math.floor(Math.random() * 200).toString(),
-          photo_urls: [...urls],
-          code: ranNum,
-          user: user.email,
-        })
-        .then(function () {
-          console.log("Document successfully written!");
-          setLoaded(false);
-          setCode(ranNum);
+      let albumsWithTitle = [];
+      let albumToUpdate;
+      db.collection("albums")
+        .where("title", "==", albumName.toLowerCase())
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            albumsWithTitle.push({ id: doc.id, data: doc.data() });
+            if (albumsWithTitle.length) {
+              albumToUpdate = albumsWithTitle.filter(
+                (alb) => alb.data.user === user.email
+              );
+            }
+          });
           setTimeout(() => {
-            resetPicsSelection();
-            navigate("/albums");
-          }, 9000);
+            updateAlbum(albumToUpdate[0].id);
+          }, 2000);
         })
-        .catch(function (error) {
-          console.error("Error writing document: ", error);
+        .catch((error) => {
+          console.log("Error getting documents: ", error);
         });
     }
   };
@@ -90,7 +117,7 @@ const Update = () => {
       {loaded && allPicsInDb && (
         <Container>
           <Col lg={10} className="my-5 pt-5 mx-auto">
-            <Form className="mx-auto form px-5 py-5" onSubmit={updateAlbum}>
+            <Form className="mx-auto form px-5 py-5" onSubmit={checkAlbum}>
               <Form.Group>
                 <Form.Label>
                   <h2>UPDATE YOUR ALBUM: {albumName.toUpperCase()}</h2>
