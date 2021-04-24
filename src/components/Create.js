@@ -96,7 +96,7 @@ const Create = () => {
                   onChange={setName}
                   required
                 />
-                <Col lg={12} md={10} className="d-flex">
+                <Col lg={12} md={10} className="d-flex flex-wrap">
                   {allPicsInDb &&
                     allPicsInDb.map((pic, index) => {
                       if (pic.selected === true && pic.user === user.email) {
@@ -122,7 +122,7 @@ const Create = () => {
               </Form.Group>
             </Form>
             {!file && (
-              <Alert variant="warning">You haven´t chosen any pics</Alert>
+              <Alert variant="warning">You haven´t uploaded any pics</Alert>
             )}
           </Col>
         </Container>
