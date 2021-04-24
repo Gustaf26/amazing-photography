@@ -99,7 +99,7 @@ const Update = () => {
                 <Form.Label>
                   <h2>UPDATE YOUR ALBUM: {albumName.toUpperCase()}</h2>
                 </Form.Label>
-                <Col lg={12} md={10} className="d-flex">
+                <Col lg={12} md={10} className="d-flex flex-wrap">
                   {allPicsInDb &&
                     allPicsInDb.map((pic, index) => {
                       if (pic.selected === true) {

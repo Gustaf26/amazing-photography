@@ -3,15 +3,14 @@ import { db, storage } from "../firebase/index";
 import { useDropzone } from "react-dropzone";
 import Alert from "react-bootstrap";
 import { useMainContext } from "../context/MainContext";
+import { FileCopySharp } from "@material-ui/icons";
 
 const UploadImage = ({ albumName, setErrorMsg }) => {
-  const [uploadProgress, setUploadProgress] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [file, setFile] = useState();
-  const imageUrl = useRef([]);
-  const { setAllPics, allPicsInDb, user } = useMainContext();
+  const [file, setFile] = useState("");
+  const { allPicsInDb, user } = useMainContext();
 
   useEffect(() => {
     setErrorMsg(true);
@@ -20,7 +19,6 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
   useEffect(() => {
     if (!file) {
       setErrorMsg(true);
-      setUploadProgress(null);
       setUploadedImage(null);
       setError(true);
       setIsSuccess(false);
@@ -38,28 +36,19 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
     setErrorMsg(false);
     setIsSuccess(false);
 
-    // get file reference
+    // // get file reference
     const fileRef = storage.ref(`allPics/${file.name}`);
 
-    // upload file to fileRef
+    // // upload file to fileRef
     const uploadTask = fileRef.put(file);
 
-    // attach listener for `state_changed`-event
-    uploadTask.on("state_changed", (taskSnapshot) => {
-      setUploadProgress(
-        Math.round(
-          (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100
-        )
-      );
-    });
-
-    // are we there yet?
+    // // are we there yet?
     uploadTask.then((snapshot) => {
-      // retrieve URL to uploaded file
+      //   // retrieve URL to uploaded file
       snapshot.ref.getDownloadURL().then((url) => {
-        // add uploaded file to db
+        //     // add uploaded file to db
         if (url) {
-          imageUrl.current = url;
+          // imageUrl.current = url;
 
           let allPics = { ...allPicsInDb };
           let ranNum = Math.floor(Math.random() * 1000);
@@ -70,7 +59,7 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
               ...allPics,
               ranNum: {
                 id: ranNum,
-                url: imageUrl.current,
+                url: url,
                 albums: [`${albumName.toLowerCase()}`],
                 selected: true,
                 user: user.email,
@@ -88,6 +77,11 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
   }, [file]);
 
   const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length > 1) {
+      alert("Upload only one doc at a time, thanks");
+      return;
+    }
+
     acceptedFiles.forEach((file) => {
       const reader = new FileReader();
 
@@ -102,6 +96,7 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
       reader.readAsArrayBuffer(file);
     });
   }, []);
+
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (

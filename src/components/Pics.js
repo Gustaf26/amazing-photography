@@ -45,7 +45,6 @@ const Pics = () => {
   const selectPic = (pic) => {
     allPicsFix.current.map((picture) => {
       if (picture.url === pic) {
-        console.log({ ...allPicsFix.current });
         return (picture.selected = true);
       }
     });
