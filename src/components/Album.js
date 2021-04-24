@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { SRLWrapper } from "simple-react-lightbox";
 import { useMainContext } from "../context/MainContext";
 import { useNavigate, Link } from "react-router-dom";
-import { Container, Row, Card, Media, Button } from "react-bootstrap";
+import { Container, Row, Card, Alert, Media, Button } from "react-bootstrap";
 
 const options = {
   buttons: {
@@ -64,37 +64,49 @@ const Album = () => {
 
   return (
     <>
-      <Container>
-        <h2 className="my-4">{currentAlbum.title.toUpperCase()}</h2>
-        <Link to={`/albums/${currentAlbum.code}/edit-title`}>
-          <p>Edit title</p>
-        </Link>
-        <SRLWrapper options={options}>
-          <Row lg={9} className="d-flex mt-5 mx-auto">
-            {picsLoaded &&
-              thisAlbumFix.length &&
-              thisAlbumFix.map((pic, index) => {
-                if (pic.user === user.email) {
-                  return (
-                    <Card className="ml-3 mb-3" id="media" key={index}>
-                      <Media key={pic.id} className="pic my-auto">
-                        <img
-                          width="100%"
-                          height="auto"
-                          src={pic.url}
-                          alt="Generic placeholder"
-                        />
-                      </Media>
-                    </Card>
-                  );
-                }
-              })}
-          </Row>
-        </SRLWrapper>
-      </Container>
-      <Button onClick={updateAlbum} className="my-3" variant="primary">
-        Update Album
-      </Button>
+      {currentAlbum && (
+        <Container>
+          <h2 className="my-4">{currentAlbum.title.toUpperCase()}</h2>
+          <Link to={`/albums/${currentAlbum.code}/edit-title`}>
+            <p>Edit title</p>
+          </Link>
+          <SRLWrapper options={options}>
+            <Row lg={9} className="d-flex mt-5 mx-auto">
+              {picsLoaded &&
+                thisAlbumFix.length &&
+                thisAlbumFix.map((pic, index) => {
+                  if (pic.user === user.email) {
+                    return (
+                      <Card className="ml-3 mb-3" id="media" key={index}>
+                        <Media key={pic.id} className="pic my-auto">
+                          <img
+                            width="100%"
+                            height="auto"
+                            src={pic.url}
+                            alt="Generic placeholder"
+                          />
+                        </Media>
+                      </Card>
+                    );
+                  }
+                })}
+            </Row>
+          </SRLWrapper>
+          <Button onClick={updateAlbum} className="my-3" variant="primary">
+            Update Album
+          </Button>
+        </Container>
+      )}
+      {!currentAlbum && (
+        <div>
+          <Alert variant="warning">
+            Oops, something went wrong. Please go back to albums
+          </Alert>
+          <Link to="/albums">
+            <p>Go back to albums</p>
+          </Link>
+        </div>
+      )}
     </>
   );
 };
