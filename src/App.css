@@ -108,6 +108,14 @@
   .custumer_approved {
     line-height: 50%;
   }
+
+  #drag-text {
+    font-size: small;
+    padding-top: 1rem;
+  }
+  body {
+    font-size: small;
+  }
 }
 
 @media screen and (min-width: 761px) {

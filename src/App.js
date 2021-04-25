@@ -31,7 +31,7 @@ function App() {
                     <Link to="/">Amazing Photography</Link>
                   </li>
                   {user ? (
-                    <ul className="d-flex list-nav">
+                    <ul className="d-flex list-nav pr-4">
                       <li className="px-3">
                         <Link to="/albums">Albums</Link>
                       </li>

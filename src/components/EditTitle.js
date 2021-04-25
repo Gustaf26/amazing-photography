@@ -40,6 +40,11 @@ const EditTitle = () => {
   const checkAlbum = (e) => {
     e.preventDefault();
 
+    if (title === "") {
+      alert("You need to enter a valid album title");
+      return;
+    }
+
     let albumsWithTitle = [];
     let albumToUpdate;
     db.collection("albums")

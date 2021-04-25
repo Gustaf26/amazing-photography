@@ -100,10 +100,10 @@ const Pics = () => {
 
   return (
     <>
+      <Alert variant="info">
+        Here you can see your pics... or upload new pics if you havent any
+      </Alert>
       <Container>
-        <Alert variant="info">
-          Here you can see your pics... or upload new pics if you havent any
-        </Alert>
         <SRLWrapper options={options}>
           <Row lg={9} md={10} className="d-flex mt-5 mx-auto">
             {picsLoaded &&
@@ -145,7 +145,7 @@ const Pics = () => {
           </Row>
         </SRLWrapper>
       </Container>
-      <Button onClick={createAlbum} className="my-3" variant="primary">
+      <Button onClick={createAlbum} className="my-5" variant="primary">
         Create From Selection / Upload
       </Button>
     </>

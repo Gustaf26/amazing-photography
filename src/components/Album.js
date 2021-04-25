@@ -78,7 +78,10 @@ const Album = () => {
                   if (pic.user === user.email) {
                     return (
                       <Card className="ml-3 mb-3" id="media" key={index}>
-                        <Media key={pic.id} className="pic my-auto">
+                        <Media
+                          key={pic.id}
+                          className="pic shadow-lg my-auto border p-1"
+                        >
                           <img
                             width="100%"
                             height="auto"

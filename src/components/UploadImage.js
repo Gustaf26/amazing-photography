@@ -95,7 +95,7 @@ const UploadImage = ({ albumName, setErrorMsg }) => {
   return (
     <div className="upload-dropzone mx-auto my-5" {...getRootProps()}>
       <input {...getInputProps()} />
-      <p>
+      <p id="drag-text">
         Drag 'n' drop some files here, or click to select files -One at a time-
       </p>
     </div>

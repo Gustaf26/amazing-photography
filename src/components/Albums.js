@@ -63,17 +63,17 @@ const Albums = () => {
 
   return (
     <>
+      {!userAlbums.current.length && (
+        <Alert variant="warning">
+          You havent got any albums yet. Go to pics and create a new one
+        </Alert>
+      )}
+      {userAlbums.current.length && (
+        <Alert variant="info">
+          Click in your albums thumbnail to see your album pics
+        </Alert>
+      )}
       <Container>
-        {!userAlbums.current.length && (
-          <Alert variant="warning">
-            You havent got any albums yet. Go to pics and create a new one
-          </Alert>
-        )}
-        {userAlbums.current.length && (
-          <Alert variant="info">
-            Click in your albums thumbnail to see your album pics
-          </Alert>
-        )}
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {albumsLoaded &&
             allAlbumsFix.current &&
