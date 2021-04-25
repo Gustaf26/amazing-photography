@@ -178,19 +178,17 @@ const Albumreview = () => {
 
   return (
     <>
+      {clientAlbum && clientAlbum.photo_urls && !alert ? (
+        <Alert variant="warning">
+          You have chosen {quantity.current} of {clientAlbum.photo_urls.length}{" "}
+          photos
+        </Alert>
+      ) : (
+        <Alert variant="success">
+          You have successfully sent your pictures to our database
+        </Alert>
+      )}
       <Container>
-        <Col lg={12}>
-          {clientAlbum && clientAlbum.photo_urls && !alert ? (
-            <Alert variant="warning">
-              You have chosen {quantity.current} of{" "}
-              {clientAlbum.photo_urls.length} photos
-            </Alert>
-          ) : (
-            <Alert variant="success">
-              You have successfully sent your pictures to our database
-            </Alert>
-          )}
-        </Col>
         {!alert && !loadingToDb && <h2>{clientAlbum.title}</h2>}
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {picsLoaded &&
