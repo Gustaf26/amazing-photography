@@ -3,7 +3,7 @@ import { db } from "../firebase/index";
 import { useMainContext } from "../context/MainContext";
 import { useNavigate } from "react-router-dom";
 
-import { Container, Row, Card, Media } from "react-bootstrap";
+import { Container, Row, Card, Media, Alert } from "react-bootstrap";
 
 const Albums = () => {
   const [albumsLoaded, setLoaded] = useState(false);
@@ -15,6 +15,7 @@ const Albums = () => {
     allPicsInDb,
   } = useMainContext();
   const allAlbumsFix = useRef([]);
+  const userAlbums = useRef("");
   const navigate = useNavigate();
 
   const selectPicsFromAlb = (alb) => {
@@ -54,9 +55,20 @@ const Albums = () => {
     }
   }, [allAlbums]);
 
+  useEffect(() => {
+    userAlbums.current = allAlbumsFix.current.filter((alb) => {
+      return alb.user === user.email;
+    });
+  }, []);
+
   return (
     <>
       <Container>
+        {!userAlbums.current.length && (
+          <Alert variant="warning">
+            You havent got any albums yet. Go to pics and create a new one
+          </Alert>
+        )}
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {albumsLoaded &&
             allAlbumsFix.current &&

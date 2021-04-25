@@ -3,7 +3,7 @@ import { db } from "../firebase/index";
 import { useMainContext } from "../context/MainContext";
 import { useNavigate } from "react-router-dom";
 import { SRLWrapper } from "simple-react-lightbox";
-import { Container, Row, Card, Media, Button } from "react-bootstrap";
+import { Container, Row, Card, Media, Alert, Button } from "react-bootstrap";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 
@@ -101,6 +101,9 @@ const Pics = () => {
   return (
     <>
       <Container>
+        <Alert variant="warning">
+          Check your pics... or upload new pics if none available
+        </Alert>
         <SRLWrapper options={options}>
           <Row lg={9} md={10} className="d-flex mt-5 mx-auto">
             {picsLoaded &&
@@ -143,7 +146,7 @@ const Pics = () => {
         </SRLWrapper>
       </Container>
       <Button onClick={createAlbum} className="my-3" variant="primary">
-        Create From Selection
+        Create From Selection / Upload
       </Button>
     </>
   );
