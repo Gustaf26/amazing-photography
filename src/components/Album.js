@@ -65,7 +65,7 @@ const Album = () => {
   return (
     <>
       {currentAlbum && (
-        <Container>
+        <Container className="mt-5 shadow rounded border border-dark">
           <h2 className="my-4">{currentAlbum.title.toUpperCase()}</h2>
           <Link to={`/albums/${currentAlbum.code}/edit-title`}>
             <p>Edit title</p>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Button, Container, Col, Alert } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useMainContext } from "../context/MainContext";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 const Login = () => {
@@ -9,9 +10,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const { user } = useMainContext();
+  const navigate = useNavigate();
 
   const userLogin = (e) => {
     e.preventDefault();
+    navigate("/albums");
     login(email, password);
   };
 
@@ -50,11 +53,6 @@ const Login = () => {
             </Form>
           </Col>
         </Container>
-      )}
-      {user && (
-        <Alert variant="success">
-          You are logged in. Navigate to your pics and albums
-        </Alert>
       )}
     </>
   );

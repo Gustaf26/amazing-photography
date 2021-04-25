@@ -69,13 +69,22 @@ const Albums = () => {
             You havent got any albums yet. Go to pics and create a new one
           </Alert>
         )}
+        {userAlbums.current.length && (
+          <Alert variant="info">
+            Click in your albums thumbnail to see your album pics
+          </Alert>
+        )}
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {albumsLoaded &&
             allAlbumsFix.current &&
             allAlbumsFix.current.map((alb, index) => {
               if (alb.user === user.email) {
                 return (
-                  <Card className="ml-3 mb-3 photo" id="media" key={index}>
+                  <Card
+                    className="ml-3 shadow mb-3 py-3 photo w-25"
+                    id="media"
+                    key={index}
+                  >
                     <Card.Text className="mt-2">Album:</Card.Text>
                     <h2>{alb.title.toUpperCase()}</h2>
                     <Media

@@ -101,8 +101,8 @@ const Pics = () => {
   return (
     <>
       <Container>
-        <Alert variant="warning">
-          Check your pics... or upload new pics if none available
+        <Alert variant="info">
+          Here you can see your pics... or upload new pics if you havent any
         </Alert>
         <SRLWrapper options={options}>
           <Row lg={9} md={10} className="d-flex mt-5 mx-auto">

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Form, Button, Container, Col, Alert } from "react-bootstrap";
+import { Form, Button, Container, Col } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useMainContext } from "../context/MainContext";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 const Register = () => {
@@ -9,9 +10,11 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const { login, register } = useAuth();
   const { user } = useMainContext();
+  const navigate = useNavigate();
 
   const userRegister = (e) => {
     e.preventDefault();
+    navigate("/albums");
     register(email, password);
     login(email, password);
   };
@@ -51,11 +54,6 @@ const Register = () => {
             </Form>
           </Col>
         </Container>
-      )}
-      {user && (
-        <Alert variant="success">
-          You are registered && logged in. Navigate to your pics and albums
-        </Alert>
       )}
     </>
   );
