@@ -191,6 +191,7 @@ const Albumreview = () => {
             </Alert>
           )}
         </Col>
+        {!alert && !loadingToDb && <h2>{clientAlbum.title}</h2>}
         <Row lg={9} className="d-flex mt-5 mx-auto">
           {picsLoaded &&
             clientAlbum &&

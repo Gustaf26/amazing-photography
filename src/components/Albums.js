@@ -63,12 +63,12 @@ const Albums = () => {
             allAlbumsFix.current.map((alb, index) => {
               if (alb.user === user.email) {
                 return (
-                  <Card className="ml-3 mb-3" id="media" key={index}>
+                  <Card className="ml-3 mb-3 photo" id="media" key={index}>
                     <Card.Text className="mt-2">Album:</Card.Text>
                     <h2>{alb.title.toUpperCase()}</h2>
                     <Media
                       key={alb.title}
-                      className="my-auto photo"
+                      className="my-auto"
                       onClick={() => goToAlbum(alb)}
                     >
                       <img
@@ -82,7 +82,7 @@ const Albums = () => {
                         alt="Generic placeholder"
                       />
                       {alb.cust_approved === true && (
-                        <p className="custumer_approved"> Customer approved</p>
+                        <p className="custumer_approved">Approved</p>
                       )}
                     </Media>
                   </Card>

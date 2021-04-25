@@ -71,14 +71,17 @@
   padding: 1rem;
   margin-top: 20%;
   margin-right: auto;
+  left: 0;
+  top: 40%;
   margin-left: 5%;
-  width: 90%;
+  width: 80%;
+  max-height: 10%;
   text-align: center;
   border: 5px solid rgb(15, 223, 15);
   color: rgb(15, 223, 15);
-  font-size: x-large;
+  font-size: large;
   font-weight: bold;
-  transform: rotate(20deg);
+  transform: rotate(10deg);
 }
 
 .upload-dropzone {
@@ -102,6 +105,9 @@
     width: 100%;
     margin: 0.5rem;
   }
+  .custumer_approved {
+    line-height: 50%;
+  }
 }
 
 @media screen and (min-width: 761px) {
@@ -111,5 +117,8 @@
     align-items: center;
     max-width: 29%;
     margin: 0.5rem;
+  }
+  .custumer_approved {
+    line-height: 200%;
   }
 }
