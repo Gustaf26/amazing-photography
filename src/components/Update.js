@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Form,
   Button,
@@ -25,7 +25,6 @@ const Update = () => {
   } = useMainContext();
   const [code, setCode] = useState("");
   const [file, setFile] = useState(false);
-  const navigate = useNavigate();
 
   const confirmFile = (message) => {
     if (message === true) {
@@ -57,10 +56,7 @@ const Update = () => {
         console.log("Document successfully written!");
         setLoaded(false);
         setCode(ranNum);
-        setTimeout(() => {
-          resetPicsSelection();
-          navigate("/albums");
-        }, 9000);
+        resetPicsSelection();
       })
       .catch(function (error) {
         console.error("Error writing document: ", error);
@@ -114,7 +110,7 @@ const Update = () => {
 
   return (
     <>
-      {albumName && loaded && allPicsInDb && (
+      {!code && albumName && loaded && allPicsInDb && (
         <Container>
           <Col lg={10} className="my-5 pt-5 mx-auto">
             <Form className="mx-auto form px-5 py-5" onSubmit={checkAlbum}>
@@ -166,15 +162,17 @@ const Update = () => {
       {code && (
         <Alert variant="success">
           <h2>Album succesfully updated!</h2>
-          <p>
+          <div>
             The album code for your customer is (copy this link){" "}
             <p>
               <a href={`/review/${code}`}>
                 <strong>photography.catala-sverdrup.se/review/{code}</strong>
               </a>
             </p>
-          </p>
-          <p>You´ll be soon redirected to your albums, please wait ...</p>
+            <Link to="/albums">
+              <p>Go back to albums</p>
+            </Link>
+          </div>
         </Alert>
       )}
     </>
