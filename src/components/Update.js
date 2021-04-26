@@ -73,20 +73,14 @@ const Update = () => {
       alert("You need to upload or select at least 1 pic");
       return;
     } else {
-      let albumsWithTitle = [];
-      let albumToUpdate;
+      let albumToUpdate = [];
       db.collection("albums")
-        .where("title", "==", albumName.toLowerCase())
+        .where("code", "==", currentAlbum.code)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            albumsWithTitle.push({ id: doc.id, data: doc.data() });
-            if (albumsWithTitle.length) {
-              albumToUpdate = albumsWithTitle.filter(
-                (alb) => alb.data.user === user.email
-              );
-            }
+            albumToUpdate.push({ id: doc.id, data: doc.data() });
           });
           setTimeout(() => {
             updateAlbum(albumToUpdate[0].id);
