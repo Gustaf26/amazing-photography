@@ -28,9 +28,7 @@ const EditTitle = () => {
         user: user.email,
       })
       .then(() => {
-        setTimeout(() => {
-          navigate(`/albums/${currentAlbum.code}`);
-        }, 1500);
+        navigate(`/albums/${currentAlbum.code}`);
       })
       .catch(function (error) {
         console.error("Error writing document: ", error);

@@ -15,7 +15,7 @@ const Albums = () => {
     allPicsInDb,
   } = useMainContext();
   const allAlbumsFix = useRef([]);
-  const userAlbums = useRef("");
+  const [userAlbums, setUserAlbums] = useState(false);
   const navigate = useNavigate();
 
   const selectPicsFromAlb = (alb) => {
@@ -56,21 +56,23 @@ const Albums = () => {
   }, [allAlbums]);
 
   useEffect(() => {
-    userAlbums.current = allAlbumsFix.current.filter((alb) => {
+    let userAlbs = allAlbumsFix.current.filter((alb) => {
       return alb.user === user.email;
     });
-  }, []);
+    setUserAlbums(userAlbs);
+  }, [allAlbumsFix.current]);
 
   return (
     <>
-      {!userAlbums.current.length && (
+      {userAlbums.length === 0 && (
         <Alert variant="warning">
-          You havent got any albums yet. Go to pics and create a new one
+          You havent got any albums yet. Go to pics and create your first album
         </Alert>
       )}
-      {userAlbums.current.length && (
+      {userAlbums.length > 0 && (
         <Alert variant="info">
-          Click in your albums thumbnail to see your album pics
+          Click in your albums thumbnail to see your album pics ... or go to
+          pics and create an album
         </Alert>
       )}
       <Container>
