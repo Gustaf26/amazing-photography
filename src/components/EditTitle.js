@@ -43,20 +43,17 @@ const EditTitle = () => {
       return;
     }
 
-    let albumsWithTitle = [];
-    let albumToUpdate;
+    let albumToUpdate = [];
     db.collection("albums")
-      .where("title", "==", currentAlbum.title.toLowerCase())
+      .where("code", "==", currentAlbum.code)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          albumsWithTitle.push({ id: doc.id, data: doc.data() });
-          if (albumsWithTitle.length) {
-            albumToUpdate = albumsWithTitle.filter(
-              (alb) => alb.data.user === user.email
-            );
-          }
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            albumToUpdate.push({ id: doc.id, data: doc.data() });
+          });
         });
         setTimeout(() => {
           updateAlbum(albumToUpdate[0].id);
