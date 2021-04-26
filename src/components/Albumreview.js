@@ -82,9 +82,6 @@ const Albumreview = () => {
   };
 
   const updateAlbum = async (id) => {
-    let ranNum;
-    ranNum = Math.floor(Math.random() * 10000000);
-
     let emptyArr;
     emptyArr = [];
     clientAlbum.photo_urls.map((photo) =>
@@ -98,7 +95,7 @@ const Albumreview = () => {
         title: clientAlbum.title.toLowerCase(),
         cust_approved: true,
         photo_urls: [...emptyArr],
-        code: ranNum,
+        code: clientAlbum.code,
         user: userEmail,
       })
       .then(function () {

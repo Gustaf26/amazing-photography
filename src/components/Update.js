@@ -39,8 +39,6 @@ const Update = () => {
     const truthy = allPicsInDb.filter((pic) => pic.selected === true);
     const urls = truthy.map((pic) => pic.url);
 
-    let ranNum;
-    ranNum = Math.floor(Math.random() * 10000000);
     await db
       .collection("albums")
       .doc(id)
@@ -49,13 +47,13 @@ const Update = () => {
         cust_apppproved: false,
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
-        code: ranNum,
+        code: currentAlbum.code,
         user: user.email,
       })
       .then(function () {
         console.log("Document successfully written!");
         setLoaded(false);
-        setCode(ranNum);
+        setCode(currentAlbum.code);
         resetPicsSelection();
       })
       .catch(function (error) {
@@ -82,6 +80,8 @@ const Update = () => {
             // doc.data() is never undefined for query doc snapshots
             albumToUpdate.push({ id: doc.id, data: doc.data() });
           });
+        })
+        .then(() => {
           setTimeout(() => {
             updateAlbum(albumToUpdate[0].id);
           }, 2000);
