@@ -50,10 +50,7 @@ const EditTitle = () => {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            albumToUpdate.push({ id: doc.id, data: doc.data() });
-          });
+          albumToUpdate.push({ id: doc.id, data: doc.data() });
         });
         setTimeout(() => {
           updateAlbum(albumToUpdate[0].id);
