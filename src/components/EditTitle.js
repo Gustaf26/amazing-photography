@@ -72,7 +72,7 @@ const EditTitle = () => {
       {currentAlbum && (
         <Container>
           <h2 className="my-4">
-            Update your album: {currentAlbum.title.toUpperCase()}
+            Update your album title: {currentAlbum.title.toUpperCase()}
           </h2>
           <Form
             className="mx-auto form px-5 py-5"
