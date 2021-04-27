@@ -70,7 +70,6 @@ const MainContextProvider = (props) => {
           });
         });
         if (emptyArr.length) {
-          console.log(emptyArr);
           setAlbumPics(emptyArr);
         }
 
