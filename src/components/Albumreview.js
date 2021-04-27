@@ -82,6 +82,9 @@ const Albumreview = () => {
   };
 
   const updateAlbum = async (id) => {
+    let ranNum;
+    ranNum = Math.floor(Math.random() * 10000000);
+
     let emptyArr;
     emptyArr = [];
     clientAlbum.photo_urls.map((photo) =>
@@ -95,7 +98,7 @@ const Albumreview = () => {
         title: clientAlbum.title.toLowerCase(),
         cust_approved: true,
         photo_urls: [...emptyArr],
-        code: clientAlbum.code,
+        code: ranNum,
         user: userEmail,
       })
       .then(function () {
@@ -123,14 +126,20 @@ const Albumreview = () => {
       return;
     }
 
-    let albumToUpdate = [];
+    let albumsWithTitle = [];
+    let albumToUpdate;
     db.collection("albums")
-      .where("code", "==", clientAlbum.code)
+      .where("title", "==", clientAlbum.title.toLowerCase())
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          albumToUpdate.push({ id: doc.id, data: doc.data() });
+          albumsWithTitle.push({ id: doc.id, data: doc.data() });
+          if (albumsWithTitle.length) {
+            albumToUpdate = albumsWithTitle.filter(
+              (alb) => alb.data.user === userEmail
+            );
+          }
         });
       })
       .then(() => updateAlbum(albumToUpdate[0].id))

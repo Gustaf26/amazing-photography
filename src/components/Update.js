@@ -39,6 +39,8 @@ const Update = () => {
     const truthy = allPicsInDb.filter((pic) => pic.selected === true);
     const urls = truthy.map((pic) => pic.url);
 
+    let ranNum;
+    ranNum = Math.floor(Math.random() * 10000000);
     await db
       .collection("albums")
       .doc(id)
@@ -47,13 +49,13 @@ const Update = () => {
         cust_apppproved: false,
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...urls],
-        code: currentAlbum.code,
+        code: ranNum,
         user: user.email,
       })
       .then(function () {
         console.log("Document successfully written!");
         setLoaded(false);
-        setCode(currentAlbum.code);
+        setCode(ranNum);
         resetPicsSelection();
       })
       .catch(function (error) {
@@ -71,17 +73,21 @@ const Update = () => {
       alert("You need to upload or select at least 1 pic");
       return;
     } else {
-      let albumToUpdate = [];
+      let albumsWithTitle = [];
+      let albumToUpdate;
       db.collection("albums")
-        .where("code", "==", currentAlbum.code)
+        .where("title", "==", albumName.toLowerCase())
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            albumToUpdate.push({ id: doc.id, data: doc.data() });
+            albumsWithTitle.push({ id: doc.id, data: doc.data() });
+            if (albumsWithTitle.length) {
+              albumToUpdate = albumsWithTitle.filter(
+                (alb) => alb.data.user === user.email
+              );
+            }
           });
-        })
-        .then(() => {
           setTimeout(() => {
             updateAlbum(albumToUpdate[0].id);
           }, 2000);

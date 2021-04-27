@@ -14,6 +14,8 @@ const EditTitle = () => {
   const updateAlbum = async (id) => {
     currentAlbum.title = title.toLowerCase();
 
+    let ranNum;
+    ranNum = Math.floor(Math.random() * 10000000);
     await db
       .collection("albums")
       .doc(id)
@@ -22,7 +24,7 @@ const EditTitle = () => {
         cust_apppproved: false,
         url: Math.floor(Math.random() * 200).toString(),
         photo_urls: [...currentAlbum.photo_urls],
-        code: currentAlbum.code,
+        code: ranNum,
         user: user.email,
       })
       .then(() => {
@@ -41,18 +43,21 @@ const EditTitle = () => {
       return;
     }
 
-    let albumToUpdate = [];
+    let albumsWithTitle = [];
+    let albumToUpdate;
     db.collection("albums")
-      .where("code", "==", currentAlbum.code)
+      .where("title", "==", currentAlbum.title.toLowerCase())
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log(doc);
           // doc.data() is never undefined for query doc snapshots
-          albumToUpdate.push({ id: doc.id, data: doc.data() });
+          albumsWithTitle.push({ id: doc.id, data: doc.data() });
+          if (albumsWithTitle.length) {
+            albumToUpdate = albumsWithTitle.filter(
+              (alb) => alb.data.user === user.email
+            );
+          }
         });
-      })
-      .then(() => {
         setTimeout(() => {
           updateAlbum(albumToUpdate[0].id);
         }, 2000);
